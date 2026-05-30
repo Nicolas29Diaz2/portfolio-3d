@@ -191,7 +191,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 4 — Loading & Intro (F6)
+### Phase 4 — Loading & Intro (F6) ✅ COMPLETE
 
 **Goal:** First user-visible feature; gates the 3D experience.
 

@@ -1,28 +1,36 @@
-import { useEffect } from "react";
-import { useDeviceCapabilities } from "@/core/performance/useDeviceCapabilities";
-import { LoadingScreen } from "@/features/loading/components/LoadingScreen/LoadingScreen";
-import { useLoadingFlow } from "@/features/loading/hooks/useLoadingFlow";
-import { useSceneStore } from "@/store/sceneStore";
-import { ToastContainer } from "@/ui/components/Toast";
-import { ZoomDisablerWrapper } from "@/ui/components/ZoomDisabler";
+import { useEffect } from 'react'
+import { Preload } from '@react-three/drei'
+import { useDeviceCapabilities } from '@/core/performance/useDeviceCapabilities'
+import { AppShell } from '@/features/app-shell/components/AppShell/AppShell'
+import { SceneEnvironment } from '@/features/3d-scene/environment/components/SceneEnvironment/SceneEnvironment'
+import { LoadingScreen } from '@/features/loading/components/LoadingScreen/LoadingScreen'
+import { useLoadingFlow } from '@/features/loading/hooks/useLoadingFlow'
+import { useSceneStore } from '@/store/sceneStore'
+import { ToastContainer } from '@/ui/components/Toast'
+import { ZoomDisablerWrapper } from '@/ui/components/ZoomDisabler'
 
 function App() {
-  const { gpuTier, isLoading } = useDeviceCapabilities();
-  const setGpuTier = useSceneStore((state) => state.setGpuTier);
-  const { loadingScreenProps } = useLoadingFlow();
+  const { gpuTier, isLoading } = useDeviceCapabilities()
+  const sceneGpuTier = useSceneStore((state) => state.gpuTier)
+  const setGpuTier = useSceneStore((state) => state.setGpuTier)
+  const { loadingScreenProps } = useLoadingFlow()
 
   useEffect(() => {
     if (!isLoading) {
-      setGpuTier(gpuTier);
+      setGpuTier(gpuTier)
     }
-  }, [gpuTier, isLoading, setGpuTier]);
+  }, [gpuTier, isLoading, setGpuTier])
 
   return (
     <ZoomDisablerWrapper>
       <ToastContainer />
       <LoadingScreen {...loadingScreenProps} />
+      <AppShell gpuTier={sceneGpuTier}>
+        <SceneEnvironment />
+        <Preload all />
+      </AppShell>
     </ZoomDisablerWrapper>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,8 +1,7 @@
-/*
- * Dark-only theme (v1). CSS variables are mapped for Tailwind utilities
- * and future Light mode extension without refactoring consumers.
+/* * Dark-only theme (v1). 
+ * Variables estándar de CSS para acceso global.
  */
-@theme {
+ :root {
   --color-background: rgb(10 10 10);
   --color-background-deep: rgb(0 0 0);
   --color-foreground: rgb(255 255 255);
@@ -16,31 +15,29 @@
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-@layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-  html {
-    color-scheme: dark;
-  }
+html {
+  color-scheme: dark;
+}
 
-  body {
-    margin: 0;
-    overflow: hidden;
-    background-color: var(--color-background-deep);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-background-deep);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  #root {
-    width: 100%;
-    height: 100%;
-  }
+#root {
+  width: 100%;
+  height: 100%;
 }
 
 @keyframes tutorial-move {
@@ -53,6 +50,7 @@
   }
 }
 
-@utility animate-tutorial-move {
+/* Clase estándar en lugar de @utility */
+.animate-tutorial-move {
   animation: tutorial-move 1.2s ease-in-out infinite;
 }
