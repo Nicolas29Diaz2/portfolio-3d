@@ -3,6 +3,7 @@ import { Preload } from '@react-three/drei'
 import { useDeviceCapabilities } from '@/core/performance/useDeviceCapabilities'
 import { AppShell } from '@/features/app-shell/components/AppShell/AppShell'
 import { SceneEnvironment } from '@/features/3d-scene/environment/components/SceneEnvironment/SceneEnvironment'
+import { SceneOrchestrator } from '@/features/3d-scene/orchestration/components/SceneOrchestrator/SceneOrchestrator'
 import { LoadingScreen } from '@/features/loading/components/LoadingScreen/LoadingScreen'
 import { useLoadingFlow } from '@/features/loading/hooks/useLoadingFlow'
 import { useSceneStore } from '@/store/sceneStore'
@@ -27,6 +28,7 @@ function App() {
       <LoadingScreen {...loadingScreenProps} />
       <AppShell gpuTier={sceneGpuTier}>
         <SceneEnvironment />
+        <SceneOrchestrator />
         <Preload all />
       </AppShell>
     </ZoomDisablerWrapper>

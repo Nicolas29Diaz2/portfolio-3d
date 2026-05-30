@@ -32,7 +32,7 @@ export const useToastStore = create<ToastStore>((set, get) => ({
       toasts: [...state.toasts, { id, message, variant }],
     }))
 
-    window.setTimeout(() => {
+    globalThis.setTimeout(() => {
       get().dismissToast(id)
     }, DEFAULT_DURATION_MS)
   },

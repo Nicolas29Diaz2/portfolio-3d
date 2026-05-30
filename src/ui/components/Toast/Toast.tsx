@@ -1,17 +1,17 @@
-import type { ToastItem, ToastVariant } from '@/store/toastStore'
+import type { ToastItem, ToastVariant } from "@/store/toastStore";
 
 type ToastProps = {
-  toast: ToastItem
-  onDismiss: (id: string) => void
-}
+  toast: ToastItem;
+  onDismiss: (id: string) => void;
+};
 
 const variantStyles: Record<ToastVariant, string> = {
-  error: 'border-red-500/40 bg-red-950/90 text-red-100',
-  success: 'border-accent/40 bg-surface/95 text-foreground',
-  info: 'border-border bg-surface/95 text-foreground',
-}
+  error: "border-red-500/40 bg-red-950/90 text-red-100",
+  success: "border-accent/40 bg-surface/95 text-foreground",
+  info: "border-border bg-surface/95 text-foreground",
+};
 
-export function Toast({ toast, onDismiss }: ToastProps) {
+export function Toast({ toast, onDismiss }: Readonly<ToastProps>) {
   return (
     <div
       role="alert"
@@ -28,5 +28,5 @@ export function Toast({ toast, onDismiss }: ToastProps) {
         ×
       </button>
     </div>
-  )
+  );
 }
