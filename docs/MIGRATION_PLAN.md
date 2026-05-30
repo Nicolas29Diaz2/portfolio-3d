@@ -156,16 +156,18 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 2 — Global State (F3, F4)
+### Phase 2 — Global State (F3, F4) ✅ COMPLETE
 
 **Goal:** Replace monolithic store with focused Zustand slices.
 
-| Step | Task | Legacy state fields |
-|---|---|---|
-| 2.1 | `sceneStore` — `cameraFocus`, `gpuTier`, `isCharacterAnimStarted` | Camera + GPU |
-| 2.2 | `navigationStore` — start/cancel/menu button visibility, `menuOption`, `showFloatButtons` | UI navigation |
-| 2.3 | `themeStore` — `sceneTheme`, `setSceneTheme` | Theme toggle |
-| 2.4 | Export `PortfolioView` enum (typed replacement for `views`) | `Store.js` |
+| Step | Task | Legacy state fields | Status |
+|---|---|---|---|
+| 2.1 | `sceneStore.ts` — `cameraFocus`, `gpuTier`, `isCharacterAnimStarted` | Camera + GPU | ✅ |
+| 2.2 | `navigationStore.ts` — start/cancel/menu button visibility, `menuOption`, `showFloatButtons` | UI navigation | ✅ |
+| 2.3 | `themeStore.ts` — `sceneTheme`, `setSceneTheme` | Theme toggle | ✅ |
+| 2.4 | `PortfolioView` enum used for `cameraFocus` and `menuOption` | `Store.js` `views` | ✅ |
+
+**Import rule:** No barrel `index.ts` in `src/store/` — import slices directly (e.g. `@/store/sceneStore`).
 
 **Exit criteria:** Stores importable; DevTools show correct defaults.
 
