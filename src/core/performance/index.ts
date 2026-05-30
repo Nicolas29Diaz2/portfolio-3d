@@ -1,2 +1,10 @@
-/** GPU / device capability detection — implemented in Phase 1. */
-export {}
+export type { DeviceCapabilities, GpuTier } from './types'
+export {
+  clampGpuTier,
+  detectBatteryCharging,
+  detectGpuTier,
+  fetchDeviceCapabilities,
+  fetchDeviceCapabilitiesDetailed,
+  resolveEffectiveGpuTier,
+} from './deviceCapabilities'
+export { useDeviceCapabilities } from './useDeviceCapabilities'

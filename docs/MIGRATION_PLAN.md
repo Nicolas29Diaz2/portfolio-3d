@@ -138,19 +138,19 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 1 — Core Layer (F2, F5)
+### Phase 1 — Core Layer (F2, F5) ✅ COMPLETE
 
 **Goal:** Shared infrastructure before any feature code.
 
-| Step | Task | Legacy reference |
-|---|---|---|
-| 1.1 | Implement `AppError` types + `Result<T, E>` helpers (`isOk`, `isErr`) | New |
-| 1.2 | Implement `HttpClient` with typed GET/POST | New |
-| 1.3 | Port `Times.js` → `src/core/constants/timing.ts` | `Constants/Times.js` |
-| 1.4 | Port `Config.js` GPU presets → typed config | `Constants/Config.js` |
-| 1.5 | Port `cameraControls.js` → typed responsive camera map | `Constants/cameraControls.js` |
-| 1.6 | Extract GPU + battery detection into `useDeviceCapabilities` hook (core) | `App.jsx` lines 59–105 |
-| 1.7 | Add Toast component in `src/ui/` | New |
+| Step | Task | Legacy reference | Status |
+|---|---|---|---|
+| 1.1 | Implement `AppError` types + `Result<T, E>` helpers (`isOk`, `isErr`) | New | ✅ |
+| 1.2 | Implement `HttpClient` with typed **GET** | New | ✅ |
+| 1.3 | Port `Times.js` → `src/core/constants/timing.ts` | `Constants/Times.js` | ✅ |
+| 1.4 | Port `Config.js` GPU presets → typed config | `Constants/Config.js` | ✅ |
+| 1.5 | Port `cameraControls.js` → typed responsive camera map | `Constants/cameraControls.js` | ✅ |
+| 1.6 | Extract GPU + battery detection into `useDeviceCapabilities` hook (core) | `App.jsx` lines 59–105 | ✅ |
+| 1.7 | Add Toast component in `src/ui/` | New | ✅ |
 
 **Exit criteria:** Unit-testable core utilities; no React components beyond Toast stub.
 
