@@ -1,0 +1,118 @@
+:root {
+  --button-border-color: rgb(255, 255, 255);
+  --button-hover-color: rgb(0, 159, 203);
+  --button-bg-color: #2e2e2e;
+  --button-animation: 0.3s;
+  --main-font: "Suse", sans-serif;
+}
+
+.contentFloatButton {
+  margin: 0px;
+  text-align: center;
+  align-content: center;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  background: var(--button-border-color);
+  color: var(--button-border-color);
+  transition: all 1s;
+  cursor: pointer;
+}
+
+.contentFloatButton:hover {
+  background-color: var(--button-hover-color);
+  box-shadow: 0 0 30px 10px var(--button-hover-color);
+  color: var(--button-hover-color);
+}
+
+.contentFloatButton::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--button-bg-color);
+}
+
+.contentFloatButton div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transform: rotate(45deg);
+  font-size: 45px;
+  font-weight: 600;
+  line-height: 30px;
+  font-family: var(--main-font);
+}
+
+.contentFloatButton i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.contentFloatButton i:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 3.2%;
+  width: 50%;
+  height: 3px;
+  background: var(--button-bg-color);
+  transform: skewX(45deg);
+  transition: var(--button-animation);
+}
+.contentFloatButton:hover i:nth-child(2)::before {
+  transform: skewX(-45deg);
+  width: 47%;
+  left: 50%;
+}
+
+.contentFloatButton i:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  top: 3.2%;
+  left: 0%;
+  width: 3px;
+  height: 50%;
+  background: var(--button-bg-color);
+  transform: skewY(45deg);
+  transition: var(--button-animation);
+}
+.contentFloatButton:hover i:nth-child(2)::after {
+  transform: skewY(-45deg);
+  height: 50%;
+  top: 47%;
+}
+
+.contentFloatButton i:nth-child(3)::before {
+  content: "";
+  position: absolute;
+  top: 47%;
+  right: 0;
+  width: 3px;
+  height: 50%;
+  background: var(--button-bg-color);
+  transform: skewY(45deg);
+  transition: var(--button-animation);
+}
+.contentFloatButton:hover i:nth-child(3)::before {
+  transform: skewY(-45deg);
+  top: 3%;
+}
+
+.contentFloatButton i:nth-child(3)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 47%;
+  width: 50%;
+  height: 3px;
+  background: var(--button-bg-color);
+  transform: skewX(45deg);
+  transition: var(--button-animation);
+}
+.contentFloatButton:hover i:nth-child(3)::after {
+  transform: skewX(-45deg);
+  left: 3.2%;
+}
