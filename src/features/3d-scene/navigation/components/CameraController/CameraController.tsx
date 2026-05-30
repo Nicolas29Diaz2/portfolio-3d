@@ -1,15 +1,15 @@
-import { CameraControls } from '@react-three/drei'
-import { useCameraNavigation } from '@/features/3d-scene/navigation/hooks/useCameraNavigation'
-import type { UseCameraNavigationOptions } from '@/features/3d-scene/navigation/types/navigation3d.types'
-import { FloatButton } from '@/ui/components/FloatButton/FloatButton'
+import { CameraControls } from "@react-three/drei";
+import { useCameraNavigation } from "@/features/3d-scene/navigation/hooks/useCameraNavigation";
+import type { UseCameraNavigationOptions } from "@/features/3d-scene/navigation/types/navigation3d.types";
+import { FloatButton } from "@/ui/components/FloatButton/FloatButton";
 
-type CameraControllerProps = UseCameraNavigationOptions
+type CameraControllerProps = UseCameraNavigationOptions;
 
 export function CameraController({
   moveInitialCamera,
 }: Readonly<CameraControllerProps>) {
   const { cameraControlRef, truckSpeed, changeView, floatButtonPlacements } =
-    useCameraNavigation({ moveInitialCamera })
+    useCameraNavigation({ moveInitialCamera });
 
   return (
     <>
@@ -25,5 +25,5 @@ export function CameraController({
         />
       ))}
     </>
-  )
+  );
 }

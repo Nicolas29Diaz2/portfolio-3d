@@ -48,6 +48,15 @@ function getCoords(
   return breakpoints.small;
 }
 
+/** Legacy limits used 0..2π; camera-controls v3 uses -π..π after normalizeRotations(). */
+function azimuthLimitForV3(legacyRadians: number): number {
+  let theta = legacyRadians % (Math.PI * 2);
+  if (theta > Math.PI) {
+    theta -= Math.PI * 2;
+  }
+  return theta;
+}
+
 export function getCameraControls(
   viewportWidth = window.innerWidth,
 ): CameraControlsMap {
@@ -119,7 +128,11 @@ export function getCameraControls(
     ABOUT: {
       rotation: {
         polar: { speed: 1, min: 1.15, max: 1.7 },
-        azimuth: { speed: 1, min: 3.6, max: 5.6 },
+        azimuth: {
+          speed: 1,
+          min: azimuthLimitForV3(3.6),
+          max: azimuthLimitForV3(5.6),
+        },
       },
       dolly: { speed: 0.5, min: 2.6, max: 7.7 },
       coordCamera: { x: xDistanceAbout, y: 2.78, z: 0.5 },
