@@ -1,0 +1,36 @@
+.floating-menu-bar {
+  position: fixed;
+  top: 1rem;
+  right: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.floating-menu-bar ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-menu-bar li {
+  margin: 0;
+}
+
+.floating-menu-bar button {
+  width: 2.2rem;
+  height: 2.2rem;
+  background-color: #48d0e4;
+  border-radius: 37%;
+  cursor: pointer;
+  border: none;
+}
+
+.floating-menu-bar button:hover {
+  transition: transform 0.3s;
+  transform: scale(1.07);
+}

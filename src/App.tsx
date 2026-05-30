@@ -7,6 +7,7 @@ import { CameraController } from '@/features/3d-scene/navigation/components/Came
 import { useInitialCameraMove } from '@/features/3d-scene/navigation/hooks/useInitialCameraMove'
 import { SceneOrchestrator } from '@/features/3d-scene/orchestration/components/SceneOrchestrator/SceneOrchestrator'
 import { LoadingScreen } from '@/features/loading/components/LoadingScreen/LoadingScreen'
+import { NavigationOverlay } from '@/features/navigation/components/NavigationOverlay/NavigationOverlay'
 import { useLoadingFlow } from '@/features/loading/hooks/useLoadingFlow'
 import { useSceneStore } from '@/store/sceneStore'
 import { ToastContainer } from '@/ui/components/Toast'
@@ -29,6 +30,7 @@ function App() {
     <ZoomDisablerWrapper>
       <ToastContainer />
       <LoadingScreen {...loadingScreenProps} />
+      <NavigationOverlay />
       <AppShell gpuTier={sceneGpuTier}>
         <SceneEnvironment />
         <SceneOrchestrator />

@@ -1,0 +1,119 @@
+:root {
+  --cancel_button-border-color: rgb(255, 255, 255);
+  --cancel_button-hover-color: rgb(157, 48, 48);
+  --cancel_button-bg-color: rgb(71, 71, 71);
+  --cancel_button-animation: 0.3s;
+}
+.contentCancelButton {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  margin: 0px;
+  text-align: center;
+  align-content: center;
+  display: block;
+  width: 30px;
+  height: 30px;
+
+  background: var(--cancel_button-border-color);
+  color: var(--cancel_button-border-color);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.contentCancelButton:hover {
+  background-color: var(--cancel_button-hover-color);
+  box-shadow: 0 0 20px 1px var(--cancel_button-hover-color);
+  color: var(--cancel_button-hover-color);
+}
+
+.contentCancelButton::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--cancel_button-bg-color);
+}
+
+.contentCancelButton div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transform: rotate(45deg);
+  font-size: 35px;
+  line-height: 30px;
+  font-family: "Electrolize-Regular", sans-serif;
+}
+
+.contentCancelButton i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.contentCancelButton i:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 3.2%;
+  width: 50%;
+  height: 3px;
+  background: var(--cancel_button-bg-color);
+  transform: skewX(45deg);
+  transition: var(--cancel_button-animation);
+}
+.contentCancelButton:hover i:nth-child(2)::before {
+  transform: skewX(-45deg);
+  width: 47%;
+  left: 50%;
+}
+
+.contentCancelButton i:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  top: 3.2%;
+  left: 0%;
+  width: 3px;
+  height: 50%;
+  background: var(--cancel_button-bg-color);
+  transform: skewY(45deg);
+  transition: var(--cancel_button-animation);
+}
+.contentCancelButton:hover i:nth-child(2)::after {
+  transform: skewY(-45deg);
+  height: 50%;
+  top: 47%;
+}
+
+.contentCancelButton i:nth-child(3)::before {
+  content: "";
+  position: absolute;
+  top: 47%;
+  right: 0;
+  width: 3px;
+  height: 50%;
+  background: var(--cancel_button-bg-color);
+  transform: skewY(45deg);
+  transition: var(--cancel_button-animation);
+}
+.contentCancelButton:hover i:nth-child(3)::before {
+  transform: skewY(-45deg);
+  top: 3%;
+}
+
+.contentCancelButton i:nth-child(3)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 47%;
+  width: 50%;
+  height: 3px;
+  background: var(--cancel_button-bg-color);
+  transform: skewX(45deg);
+  transition: var(--cancel_button-animation);
+}
+.contentCancelButton:hover i:nth-child(3)::after {
+  transform: skewX(-45deg);
+  left: 3.2%;
+}

@@ -1,0 +1,46 @@
+.menu-screen-html {
+  background: #48d0e4;
+  width: 326px;
+  height: 318px;
+}
+
+.menu-screen-no-interaction {
+  pointer-events: none;
+}
+
+.menu-screen-title {
+  position: absolute;
+  font-size: 25px;
+  top: 12px;
+  left: 65px;
+  color: #000;
+  z-index: 2;
+}
+
+.menu-screen-hand-button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.menu-screen-hand-button img {
+  position: absolute;
+  top: 50%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: auto;
+  pointer-events: none;
+}
+
+.menu-screen-hand-button:hover {
+  transform: scale(1.1); /* Mantener centrado y escalar */
+}

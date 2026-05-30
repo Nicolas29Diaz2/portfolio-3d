@@ -1,0 +1,14 @@
+.monitor-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #48d0e4;
+  color: #000;
+  pointer-events: none;
+}
+
+.monitor-placeholder-label {
+  font-size: 18px;
+  font-weight: 600;
+  pointer-events: none;
+}

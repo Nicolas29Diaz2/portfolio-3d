@@ -93,9 +93,9 @@ Each row maps to a **feature domain** in the new architecture.
 | F8 | **3D Scenario Models** | `Scenario/`, `Shelf`, `Cables` | `src/features/3d-scene/scenario/` | No |
 | F9 | **3D Character & Chair** | `Character.jsx`, `Chair.jsx`, `Scene3D.jsx` | `src/features/3d-scene/character/` | No |
 | F10 | **Camera Navigation** | `Scene.jsx`, `cameraControls.js`, `FloatButton` | `src/features/3d-scene/camera/` | No |
-| F11 | **Navigation HUD** | `FloatObjects`, `MenuButtons`, cancel button | `src/features/navigation/` | No |
+| F11 | **Navigation HUD** | `FloatObjects`, `MenuButtons`, cancel button | `src/features/navigation/` | Yes |
 | F12 | **3D Screen Mounts** | `*3D.jsx` in `3D_Models/Screens/` | `src/features/3d-scene/screens/` | No |
-| F13 | **Menu** | `Screens/Menu/` | `src/features/menu/` | No |
+| F13 | **Menu** | `Screens/Menu/` | `src/features/menu/` | Yes (shell + nav; content screens Phases 9–12) |
 | F14 | **About** | `Screens/About/` | `src/features/about/` | **Yes** |
 | F15 | **Projects** | `Screens/Projects/`, `Constants/Constants.js` | `src/features/projects/` | **Yes** |
 | F16 | **Skills** | `Screens/Skills/`, `Constants/Constants.js` | `src/features/skills/` | **Yes** |
@@ -209,7 +209,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 5 — 3D Canvas Shell (F1, F7)
+### Phase 5 — 3D Canvas Shell (F1, F7) ✅ COMPLETE
 
 **Goal:** Render the room environment without interactive screens.
 
@@ -225,7 +225,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 6 — 3D Scenario & Character (F8, F9, F12)
+### Phase 6 — 3D Scenario & Character (F8, F9, F12) ✅ COMPLETE
 
 **Goal:** Static room + animated character (no screen content yet).
 
@@ -244,7 +244,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 7 — Camera & 3D Navigation (F10)
+### Phase 7 — Camera & 3D Navigation (F10) ✅ COMPLETE
 
 **Goal:** User can orbit the room and click float buttons.
 
@@ -260,20 +260,20 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 8 — Navigation HUD (F11, F13 shell)
+### Phase 8 — Navigation HUD (F11, F13 shell) ✅ COMPLETE
 
 **Goal:** Overlay controls outside the Canvas.
 
 | Step | Task | Legacy reference |
 | --- | --- | --- |
-| 8.1 | `NavigationOverlay` — cancel button (+) | `FloatObjects.jsx` |
-| 8.2 | `FloatingMenuBar` — theme toggle + open menu | `MenuButtons/MenuButtons.jsx` |
-| 8.3 | Move tutorial icon (character view hint) | `FloatObjects.jsx` |
-| 8.4 | `Menu` screen shell — hand button, title, empty nav slot | `Screens/Menu/Main/Menu.jsx` |
-| 8.5 | `MenuButtons` — SKILLS / ABOUT / PROJECTS / CONTACT | `Screens/Menu/Buttons/` |
-| 8.6 | Wire `ZoomDisablerWrapper` at app root (already ported in Phase 0) | `src/ui/components/ZoomDisabler/` |
+| 8.1 | `NavigationOverlay` — cancel button (+) | `FloatObjects.jsx` | ✅ |
+| 8.2 | `FloatingMenuBar` — theme toggle + open menu | `MenuButtons/MenuButtons.jsx` | ✅ |
+| 8.3 | Move tutorial icon (character view hint) | `FloatObjects.jsx` | ✅ |
+| 8.4 | `MenuScreen` shell — hand button, title, nav slot | `Screens/Menu/Main/Menu.jsx` | ✅ |
+| 8.5 | `MenuNavButtons` — SKILLS / ABOUT / PROJECTS / CONTACT | `Screens/Menu/Buttons/` | ✅ |
+| 8.6 | `ZoomDisablerWrapper` at app root (ported Phase 0) | `src/ui/components/ZoomDisabler/` | ✅ |
 
-**Exit criteria:** Full navigation loop works with **placeholder** screen content.
+**Exit criteria:** Full navigation loop works with **placeholder** screen content. ✅
 
 ---
 
