@@ -1,5 +1,3 @@
-@import 'tailwindcss';
-
 /*
  * Dark-only theme (v1). CSS variables are mapped for Tailwind utilities
  * and future Light mode extension without refactoring consumers.
@@ -15,7 +13,7 @@
   --color-border: rgb(40 40 40);
   --color-preload: rgb(72 208 228);
 
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 @layer base {

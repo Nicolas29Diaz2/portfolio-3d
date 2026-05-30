@@ -16,7 +16,7 @@ The legacy app is a **single-page 3D portfolio** built with React 18 + JavaScrip
 
 Each section renders as an **`Html` overlay** (from `@react-three/drei`) projected onto a corresponding **GLB screen model**. Content is currently **hard-coded** in JS constants; the new project will **fetch it from APIs** using the `HttpClient` + `Result` pattern.
 
-The migration strategy is **bottom-up**: establish core infrastructure and the 3D shell first, then layer navigation, then migrate screen features one at a time — converting CSS Modules → Tailwind and static data → typed API contracts.
+The migration strategy is **bottom-up**: establish core infrastructure and the 3D shell first, then layer navigation, then migrate screen features one at a time — converting legacy CSS to **strictly organized Plain CSS per component** (preserving all original visual metrics exactly) and static data to typed API contracts.
 
 ---
 
@@ -40,12 +40,13 @@ flowchart TD
 
     G -->|cameraFocus view| I[About / Projects / Skills / Contact / Menu]
     D -->|menu / cancel / theme| G
+
 ```
 
 ### 2.2 Legacy Folder Structure (conceptual)
 
 | Legacy path | Responsibility |
-|---|---|
+| --- | --- |
 | `App.jsx` | Canvas bootstrap, GPU/battery detection, DPR, asset preload |
 | `Store/Store.js` | Monolithic Zustand store (views, camera, UI buttons, theme, GPU tier) |
 | `Constants/` | `cameraControls.js`, `Times.js`, `Config.js` (timing, responsive camera, GPU presets) |
@@ -60,12 +61,12 @@ flowchart TD
 | `Components/SVG/` | Menu and theme toggle icons |
 | `Animation/useScaleAnimation.jsx` | Shared scale-in/out animation hook |
 | `IconsTutorials/IconTutorial.jsx` | “Drag to move” tutorial overlay |
-| `StylesVariables/` + `*.module.css` | All styling (to be replaced by Tailwind) |
+| `StylesVariables/` + `*.module.css` | All styling (to be migrated to organized Plain CSS per component, keeping exact legacy metrics) |
 
 ### 2.3 Global State (`Store.js`) — Views Enum
 
 | View key | Triggered by | Legacy UI |
-|---|---|---|
+| --- | --- | --- |
 | `INITIAL` | App load | Intro camera, hand icon on menu screen |
 | `CHARACTER` | Start / Cancel | Default seated view, float buttons visible |
 | `MENU` | Hand icon / HUD menu button | Full-screen menu with section buttons |
@@ -81,7 +82,7 @@ flowchart TD
 Each row maps to a **feature domain** in the new architecture.
 
 | # | Feature | Legacy source | New target path | API-driven? |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | F1 | **App Shell & Canvas** | `App.jsx`, `main.jsx` | `src/App.tsx`, `src/features/app-shell/` | No |
 | F2 | **Core / HTTP / Result** | *(not present)* | `src/core/api/`, `src/core/types/` | Yes (foundation) |
 | F3 | **Global Store** | `Store/Store.js` | `src/store/` (split by concern) | Partial |
@@ -100,14 +101,14 @@ Each row maps to a **feature domain** in the new architecture.
 | F16 | **Skills** | `Screens/Skills/`, `Constants/Constants.js` | `src/features/skills/` | **Yes** |
 | F17 | **Contact** | `Screens/Contact/`, EmailJS CDN | `src/features/contact/` | **Yes** (form submit) |
 | F18 | **UI Primitives** | `IconTutorial`, SVG icons, shared animations | `src/ui/` | No |
-| F19 | **Design System / Styles** | `StylesVariables/`, all CSS modules | `src/styles/`, Tailwind config | No |
+| F19 | **Design System / Styles** | `StylesVariables/`, legacy `.css` | `src/styles/` (global variables, resets) | No |
 
 ### 3.1 Cross-Cutting Concerns to Refactor (not 1:1 ports)
 
 | Legacy pattern | New rule | Action |
-|---|---|---|
+| --- | --- | --- |
 | Monolithic `Store.js` | Feature-driven stores | Split into `sceneStore`, `navigationStore`, `themeStore`, etc. |
-| CSS Modules + global `.css` | Tailwind only | Rebuild all styles with utility classes + CSS variables |
+| Global `.css` spaghetti | Separated Styles Pattern | Migrate to plain `.css` files per component, preserving exact legacy metrics and keyframes. |
 | Static `Constants.js` data | API + `HttpClient` | Replace with typed fetch hooks returning `Result<T, AppError>` |
 | `emailjs` CDN + inline submit | Result pattern in hooks | Move to backend contact API; Toast on error |
 | `setState` inside `useFrame` (`Character.jsx`) | No React state in render loop | Use `useRef` + imperative material updates |
@@ -125,13 +126,13 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Empty shell matches target folder layout.
 
 | Step | Task | Output | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 0.1 | Create folder structure: `core/`, `ui/`, `features/`, `store/`, `styles/` | Directories + barrel exports | ✅ |
-| 0.2 | Install and configure **Tailwind CSS v4** with dark CSS variables | `vite.config.ts`, `src/styles/globals.css` | ✅ |
+| 0.2 | Set up global CSS variables and base resets (Light/Dark themes) | `src/styles/globals.css` | ✅ |
 | 0.3 | Install 3D + state + Embla + EmailJS deps (see §6) | Updated `package.json` | ✅ |
 | 0.4 | Create `public/Models`, `public/Images`, `public/Fonts` | Directory placeholders | ✅ (copy assets before Phase 5) |
 | 0.5 | Port SEO/meta + preload shell from legacy `index.html` | `index.html` | ✅ |
-| 0.6 | Port `ZoomDisabler` + wrapper (TypeScript, Tailwind) | `src/ui/components/ZoomDisabler/` | ✅ |
+| 0.6 | Port `ZoomDisabler` + wrapper (TypeScript, Plain CSS) | `src/ui/components/ZoomDisabler/` | ✅ |
 | 0.7 | Configure `@/` path alias + `strict` TypeScript | `vite.config.ts`, `tsconfig.app.json` | ✅ |
 
 **Exit criteria:** `npm run dev` serves a styled dark page; `npm run build` passes.
@@ -143,7 +144,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Shared infrastructure before any feature code.
 
 | Step | Task | Legacy reference | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1.1 | Implement `AppError` types + `Result<T, E>` helpers (`isOk`, `isErr`) | New | ✅ |
 | 1.2 | Implement `HttpClient` with typed **GET** | New | ✅ |
 | 1.3 | Port `Times.js` → `src/core/constants/timing.ts` | `Constants/Times.js` | ✅ |
@@ -161,7 +162,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Replace monolithic store with focused Zustand slices.
 
 | Step | Task | Legacy state fields | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 2.1 | `sceneStore.ts` — `cameraFocus`, `gpuTier`, `isCharacterAnimStarted` | Camera + GPU | ✅ |
 | 2.2 | `navigationStore.ts` — start/cancel/menu button visibility, `menuOption`, `showFloatButtons` | UI navigation | ✅ |
 | 2.3 | `themeStore.ts` — `sceneTheme`, `setSceneTheme` | Theme toggle | ✅ |
@@ -178,9 +179,9 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Reusable pieces needed by loading, navigation, and screens.
 
 | Step | Task | Legacy reference | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 3.1 | `useScaleAnimation` → typed hook in `src/ui/hooks/useScaleAnimation.ts` | `Animation/useScaleAnimation.jsx` | ✅ |
-| 3.2 | `IconTutorial` component (Tailwind) | `IconsTutorials/IconTutorial.jsx` | ✅ |
+| 3.2 | `IconTutorial` component (with `IconTutorial.css`) | `IconsTutorials/IconTutorial.jsx` | ✅ |
 | 3.3 | `MenuSvg`, `SwitchThemeSvg` → inline SVG components | `Components/SVG/` | ✅ |
 | 3.4 | Shared `ScreenHtml` wrapper + `ScreenHtmlDistance` presets | Repeated in every screen | ✅ |
 
@@ -194,15 +195,17 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** First user-visible feature; gates the 3D experience.
 
-| Step | Task | Legacy reference |
-|---|---|---|
-| 4.1 | `LoadingScreen` view component (Tailwind) | `LoadingScreen/LoadingScreen.jsx` |
-| 4.2 | `LoadingIcon` progress indicator | `LoadingIcon/LoadingIcon.jsx` |
-| 4.3 | Slide-in/out animation (CSS → Tailwind + keyframes in config) | `Loading.css`, StartButton CSS |
-| 4.4 | `useLoadingFlow` hook — progress, show Continue, dispatch `setStartButtonPressed` | Logic in `LoadingScreen` + `App.jsx` |
-| 4.5 | Wire `useProgress` from drei at App level | `App.jsx` |
+| Step | Task | Legacy reference | Status |
+| --- | --- | --- | --- |
+| 4.1 | `LoadingScreen` view component (with `LoadingScreen.css`) | `LoadingScreen/LoadingScreen.jsx` | Pending |
+| 4.2 | `LoadingIcon` progress indicator | `LoadingIcon/LoadingIcon.jsx` | Pending |
+| 4.3 | Slide-in/out animation (Preserve legacy keyframes and percentages exactly in `LoadingScreen.css`) | `Loading.css`, StartButton CSS | Pending |
+| 4.4 | `useLoadingFlow` hook — progress, show Continue, `navigationStore` actions | Logic in `LoadingScreen` + `App.jsx` | Pending |
+| 4.5 | Wire `useProgress` from drei at App level via `useLoadingFlow` | `App.jsx` | Pending |
 
-**Exit criteria:** Loading screen works standalone; Continue sets store flag.
+**Import rule:** No barrel `index.ts` in `src/features/loading/`. Ensure sequence respects `#preload-logo` DOM clear.
+
+**Exit criteria:** Loading screen works standalone; visuals 100% match legacy exactly; Continue sets store flag.
 
 ---
 
@@ -211,7 +214,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Render the room environment without interactive screens.
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 5.1 | `AppShell` — Canvas setup, even-dimension sizing, DPR from GPU tier | `App.jsx` |
 | 5.2 | `SceneEnvironment` — Dark branch (default): color, fog, stars, reflector floor, Bloom | `SceneConf.jsx` |
 | 5.3 | ~~Light branch~~ — **out of scope v1** (Dark-only) | — |
@@ -227,7 +230,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Static room + animated character (no screen content yet).
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 6.1 | Port `Scenario.jsx` (room GLB) | `Scenario/Scenario.jsx` |
 | 6.2 | Port `Shelf.jsx` | `Scenario/Shelf.jsx` |
 | 6.3 | Port `Character.jsx` — **refactor `useFrame` state updates to refs** | `Scenario/Character.jsx` |
@@ -246,10 +249,10 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** User can orbit the room and click float buttons.
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 7.1 | `CameraController` component with `CameraControls` ref | `Scene.jsx` |
 | 7.2 | `useCameraNavigation` hook — view changes, resize handling, cancel/start flows | `Scene.jsx` (decompose) |
-| 7.3 | `FloatButton` 3D component (Tailwind inner HTML) | `Floats/FloatButton.jsx` |
+| 7.3 | `FloatButton` 3D component (with `FloatButton.css`) | `Floats/FloatButton.jsx` |
 | 7.4 | Place float buttons at legacy positions for ABOUT, PROJECTS, SKILLS, CONTACT | `Scene.jsx` lines 244–267 |
 | 7.5 | Initial camera intro animation on load | `App.jsx` + `Scene.jsx` |
 
@@ -262,7 +265,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Overlay controls outside the Canvas.
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 8.1 | `NavigationOverlay` — cancel button (+) | `FloatObjects.jsx` |
 | 8.2 | `FloatingMenuBar` — theme toggle + open menu | `MenuButtons/MenuButtons.jsx` |
 | 8.3 | Move tutorial icon (character view hint) | `FloatObjects.jsx` |
@@ -279,7 +282,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Simplest content screen; validates Html-on-GLB + API pattern.
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 9.1 | Define `AboutDto` + API contract | Hard-coded text in `About.jsx` |
 | 9.2 | `useAbout()` hook — fetch via `HttpClient`, handle `Result` | New |
 | 9.3 | `AboutScreen` — Background, BasicInfo, description, image | `Screens/About/` |
@@ -294,16 +297,16 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Carousel with dynamic project list.
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 10.1 | Define `ProjectDto[]` API contract | `projectsData` in Constants |
 | 10.2 | `useProjects()` hook | New |
-| 10.3 | `ProjectCard`, `ProjectSlider` components (Tailwind) | `ItemProject`, `ProjectsSlider` |
+| 10.3 | `ProjectCard`, `ProjectSlider` components (Plain CSS) | `ItemProject`, `ProjectsSlider` |
 | 10.4 | Build `ProjectCarousel` with **Embla** — `align: 'center'`, dynamic active-slide centering (no padding slides) | New |
 | 10.5 | GPU-tier animation gate (`gpuTier >= 3`) | `Projects.jsx` |
 | 10.6 | Tutorial overlay on PROJECTS focus | `Projects.jsx` |
 | 10.7 | Special case: hide character/chair when PROJECTS focused | `Scene3D.jsx` lines 104–108 |
 
-**Exit criteria:** Projects carousel loads from API; slide interaction matches legacy feel.
+**Exit criteria:** Projects carousel loads from API; slide interaction matches legacy feel exactly.
 
 ---
 
@@ -312,7 +315,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Category slider with skill cards.
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 11.1 | Define `SkillCategoryDto[]` API contract | `skillsConf` in Constants |
 | 11.2 | `useSkills()` hook | New |
 | 11.3 | `SkillCard`, `SkillSlider`, `SkillSubtitle` | `SkillContainer`, `Subtitle`, slider |
@@ -328,25 +331,25 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 **Goal:** Form submission via backend API (not EmailJS).
 
 | Step | Task | Legacy reference |
-|---|---|---|
+| --- | --- | --- |
 | 12.1 | Port EmailJS env vars (`VITE_PUBLIC_KEY`, `VITE_SERVICE_ID`) | `.env.example` |
 | 12.2 | `useContactForm()` hook — submit via `@emailjs/browser` (same fields/flow as legacy) | `Form.jsx` |
 | 12.3 | `ContactForm`, `SocialLinks` components | `Form/`, `Icons/` |
 | 12.4 | `ContactScreen` with pointer-events gating | `Contact.jsx` |
 | 12.5 | EmailJS via npm (CDN already omitted in Phase 0 `index.html`) | `@emailjs/browser` |
 
-**Exit criteria:** Form submits to API; success/error feedback works.
+**Exit criteria:** Form submits via EmailJS exactly as in legacy.
 
 ---
 
 ### Phase 13 — Integration, Polish & Cleanup
 
 | Step | Task |
-|---|---|
+| --- | --- |
 | 13.1 | Compose final `App.tsx` from `AppShell` + `NavigationOverlay` + `LoadingScreen` |
 | 13.2 | Strict TypeScript pass — zero `any`, explicit props on all components |
 | 13.3 | Performance audit — verify no `setState` in `useFrame`; `useMemo` on geometries/materials |
-| 13.4 | Delete unused legacy CSS patterns; confirm no `.module.css` remain |
+| 13.4 | Delete unused legacy CSS patterns; confirm all styles correctly localized |
 | 13.5 | Add error boundary for 3D context (optional, recommended) |
 | 13.6 | E2E smoke test: load → continue → visit all 4 sections → cancel back |
 | 13.7 | Production build size check (GLB preload strategy) |
@@ -375,7 +378,11 @@ src/
 ├── ui/
 │   ├── components/
 │   │   ├── Toast/
+│   │   │   ├── Toast.tsx
+│   │   │   └── Toast.css
 │   │   ├── IconTutorial/
+│   │   │   ├── IconTutorial.tsx
+│   │   │   └── IconTutorial.css
 │   │   └── ScreenHtml/
 │   ├── hooks/
 │   │   └── useScaleAnimation.ts
@@ -385,6 +392,11 @@ src/
 ├── features/
 │   ├── app-shell/
 │   ├── loading/
+│   │   ├── components/
+│   │   │   └── LoadingScreen/
+│   │   │       ├── LoadingScreen.tsx
+│   │   │       └── LoadingScreen.css
+│   │   └── hooks/
 │   ├── 3d-scene/
 │   │   ├── environment/
 │   │   ├── scenario/
@@ -401,6 +413,7 @@ src/
 │   └── globals.css
 ├── App.tsx
 └── main.tsx
+
 ```
 
 ---
@@ -410,7 +423,7 @@ src/
 ### 6.1 Production Dependencies
 
 | Legacy package | Verdict | Notes |
-|---|---|---|
+| --- | --- | --- |
 | `react` / `react-dom` | **Keep (already upgraded)** | New project uses **React 19**; verify R3F compatibility before pinning |
 | `@react-three/fiber` | **Keep — update** | Legacy `^8.15`; install latest v9.x compatible with React 19 |
 | `@react-three/drei` | **Keep — update** | Used extensively: `Html`, `CameraControls`, `useGLTF`, `useProgress`, `Stars`, `Environment`, `MeshReflectorMaterial`, etc. |
@@ -426,19 +439,18 @@ src/
 ### 6.2 Dev Dependencies
 
 | Legacy package | Verdict | Notes |
-|---|---|---|
+| --- | --- | --- |
 | `@vitejs/plugin-react` | **Keep** | Already in new project (v6) |
 | `vite` | **Keep** | Already in new project (v8) |
 | `eslint` + react plugins | **Keep** | New project has modern flat config |
 | `@types/react` / `@types/react-dom` | **Keep** | Already present |
 | `typescript` | **Add** | Required; not in legacy |
-| `tailwindcss` + `postcss` + `autoprefixer` | **Add** | Mandatory per architecture rules |
 | `@types/three` | **Add (optional)** | Helpful for manual Three.js work in Character |
 
 ### 6.3 Installed versions (Phase 0 — 2026-05-29)
 
 | Package | Version |
-|---|---|
+| --- | --- |
 | `@react-three/fiber` | ^9.6.1 |
 | `@react-three/drei` | ^10.7.7 |
 | `@react-three/postprocessing` | ^3.0.4 |
@@ -447,12 +459,11 @@ src/
 | `detect-gpu` | ^5.0.70 |
 | `embla-carousel-react` | ^8.6.0 |
 | `@emailjs/browser` | ^4.4.1 |
-| `tailwindcss` + `@tailwindcss/vite` | ^4.3.0 |
 
 ### 6.4 CDN / External Scripts
 
 | Source | Verdict |
-|---|---|
+| --- | --- |
 | `@emailjs/browser` CDN in legacy `index.html` | **Removed** — use npm package in Phase 12 |
 | Google Analytics (`gtag.js`) | **Kept** in new `index.html` |
 
@@ -463,7 +474,7 @@ src/
 These endpoints replace static constants. Adjust paths to match your backend.
 
 | Feature | Method | Suggested endpoint | Legacy data source |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | About | `GET` | `/api/about` | Hard-coded bio + image path in `About.jsx` |
 | Projects | `GET` | `/api/projects` | `projectsData[]` — 4 real + 2 empty padding entries |
 | Skills | `GET` | `/api/skills` | `skillsConf[]` — 4 categories, variable skills per category |
@@ -476,11 +487,11 @@ These endpoints replace static constants. Adjust paths to match your backend.
 ## 8. Risk Register
 
 | Risk | Impact | Mitigation |
-|---|---|---|
+| --- | --- | --- |
 | React 19 + R3F peer dependency mismatch | Build failure | Pin compatible versions in Phase 0; test Canvas mount early |
 | `Character.jsx` updates state in `useFrame` | FPS drops | Refactor in Phase 6 before profiling |
 | Large GLB assets | Slow first load | Keep `Preload all`; consider Draco compression |
-| CSS → Tailwind on Html overlays | Visual regression | Migrate one screen at a time; compare side-by-side |
+| CSS migration | Visual regression | Preserve exact legacy metrics, percentages, and keyframes in component-scoped `.css` files. |
 | Monolithic store hidden coupling | Bugs during split | Phase 2 mapping table; migrate consumers incrementally |
 | Light theme incomplete in legacy | Visual gap | Dark is production default; Light branch exists but less tested — validate in Phase 5 |
 
@@ -489,7 +500,7 @@ These endpoints replace static constants. Adjust paths to match your backend.
 ## 9. Locked Scope Decisions (Confirmed)
 
 | Topic | Decision |
-|---|---|
+| --- | --- |
 | **Contact form** | Keep **EmailJS** (`@emailjs/browser`). Backend will not handle contact. Port existing submit logic in Phase 12. |
 | **Slider** | Replace `react-slick` with **Embla Carousel** (`embla-carousel-react`). |
 | **Project carousel centering** | Do **not** use fake/empty API padding slides. Configure Embla to **dynamically center the active slide** on all viewport sizes (critical for mobile). |
@@ -504,7 +515,7 @@ These endpoints replace static constants. Adjust paths to match your backend.
 ## 10. Effort Estimate (Rough)
 
 | Phase | Estimated effort |
-|---|---|
+| --- | --- |
 | 0 – Scaffolding | 1–2 days |
 | 1 – Core | 2–3 days |
 | 2 – Stores | 1 day |
@@ -525,16 +536,14 @@ These endpoints replace static constants. Adjust paths to match your backend.
 
 ## 11. Definition of Done
 
-- [ ] All 7 portfolio views navigable (INITIAL → CHARACTER → ABOUT / PROJECTS / SKILLS / CONTACT / MENU)
-- [ ] Zero `.module.css` or legacy global CSS files in `src/`
-- [ ] All API features use `HttpClient` + `Result` pattern; no `try/catch` in components/hooks UI layer
-- [ ] Strict TypeScript with no `any`
-- [ ] No React state updates inside `useFrame`
-- [ ] Components ≤ ~200 lines; logic extracted to hooks
-- [ ] Light/Dark theme toggle functional
-- [ ] GPU tier degrades postprocessing/floor quality correctly
-- [ ] Production build passes `tsc -b && vite build`
+* [ ] All 7 portfolio views navigable (INITIAL → CHARACTER → ABOUT / PROJECTS / SKILLS / CONTACT / MENU)
+* [ ] All styles strictly separated into plain `.css` files per component preserving legacy logic.
+* [ ] All API features use `HttpClient` + `Result` pattern; no `try/catch` in components/hooks UI layer
+* [ ] Strict TypeScript with no `any`
+* [ ] No React state updates inside `useFrame`
+* [ ] Components ≤ ~200 lines; logic extracted to hooks
+* [ ] Light/Dark theme toggle functional
+* [ ] GPU tier degrades postprocessing/floor quality correctly
+* [ ] Production build passes `tsc -b && vite build`
 
----
-
-*Document generated from analysis of `portfolio-3d-legacy/src` against `portfolio-3d/.cursorrules/rules.md`.*
+```
