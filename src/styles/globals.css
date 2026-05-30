@@ -44,3 +44,17 @@
     height: 100%;
   }
 }
+
+@keyframes tutorial-move {
+  0%,
+  100% {
+    transform: translate(-30%, -20%);
+  }
+  50% {
+    transform: translate(-70%, -20%);
+  }
+}
+
+@utility animate-tutorial-move {
+  animation: tutorial-move 1.2s ease-in-out infinite;
+}

@@ -173,16 +173,18 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 ---
 
-### Phase 3 — UI Primitives (F18)
+### Phase 3 — UI Primitives (F18) ✅ COMPLETE
 
 **Goal:** Reusable pieces needed by loading, navigation, and screens.
 
-| Step | Task | Legacy reference |
-|---|---|---|
-| 3.1 | `useScaleAnimation` → typed hook in `src/ui/hooks/` | `Animation/useScaleAnimation.jsx` |
-| 3.2 | `IconTutorial` component (Tailwind) | `IconsTutorials/IconTutorial.jsx` |
-| 3.3 | `MenuSvg`, `SwitchThemeSvg` → inline SVG components | `Components/SVG/` |
-| 3.4 | Shared `ScreenHtml` wrapper (standardizes `Html` props: `distanceFactor`, `occlude`, etc.) | Repeated in every screen |
+| Step | Task | Legacy reference | Status |
+|---|---|---|---|
+| 3.1 | `useScaleAnimation` → typed hook in `src/ui/hooks/useScaleAnimation.ts` | `Animation/useScaleAnimation.jsx` | ✅ |
+| 3.2 | `IconTutorial` component (Tailwind) | `IconsTutorials/IconTutorial.jsx` | ✅ |
+| 3.3 | `MenuSvg`, `SwitchThemeSvg` → inline SVG components | `Components/SVG/` | ✅ |
+| 3.4 | Shared `ScreenHtml` wrapper + `ScreenHtmlDistance` presets | Repeated in every screen | ✅ |
+
+**Import rule:** No barrel `index.ts` in new UI primitives — import files directly.
 
 **Exit criteria:** Storybook-style manual render in a temp route (optional) or unit snapshot.
 
