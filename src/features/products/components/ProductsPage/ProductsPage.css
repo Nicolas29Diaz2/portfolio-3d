@@ -1,0 +1,9 @@
+.products-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-background-deep);
+  color: var(--color-foreground);
+  overflow-x: hidden;
+}
