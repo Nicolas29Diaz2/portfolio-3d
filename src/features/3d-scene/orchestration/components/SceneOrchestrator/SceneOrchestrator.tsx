@@ -10,10 +10,10 @@ import { Shelf } from "@/features/3d-scene/models/scenario/Shelf";
 import { useIntroSequence } from "@/features/3d-scene/orchestration/hooks/useIntroSequence";
 import { useSceneVisibility } from "@/features/3d-scene/orchestration/hooks/useSceneVisibility";
 import { MenuScreen } from "@/features/menu/components/MenuScreen/MenuScreen";
-import { ProjectsScreen } from "@/features/projects/components/ProjectsScreen/ProjectsScreen";
+import { ProjectsScreen } from "@/features/projects/components/index";
 import { useSceneStore } from "@/store/sceneStore";
-import { AboutScreen } from "@/features/about/components";
-import { SkillsScreen } from "@/features/skills/components";
+import { AboutScreen } from "@/features/about/components/index";
+import { SkillsScreen } from "@/features/skills/components/index";
 import { ContactScreen } from "@/features/contact/components/index";
 
 export function SceneOrchestrator() {

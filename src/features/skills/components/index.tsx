@@ -22,6 +22,7 @@ import { SkillsSubtitle } from "./SkillsSubtitle/SkillsSubtitle";
 import { SkillContainer } from "./SkillContainer/SkillContainer";
 import { useSkills } from "../hooks/useSkills";
 import { SLIDER_CONF } from "../constants/skills.constants";
+import { Loader } from "@/ui/components/Loader/Loader";
 
 interface SkillsScreenProps {
   readonly showScreen: boolean;
@@ -67,6 +68,8 @@ export function SkillsScreen({ showScreen }: SkillsScreenProps) {
     >
       <section className={styles.fullContainer}>
         <SkillsBackground animate={animate} />
+
+        {isLoading && <Loader />}
 
         {!isLoading && skillGroups.length > activeIndex && (
           <SkillsSubtitle

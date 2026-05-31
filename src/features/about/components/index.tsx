@@ -3,6 +3,7 @@ import { AboutBasicInfo } from "@/features/about/components/AboutBasicInfo/About
 import { ScreenHtml } from "@/ui/components/ScreenHtml/ScreenHtml";
 import { useAbout } from "../hooks/useAbout";
 import styles from "./index.module.css";
+import { Loader } from "@/ui/components/Loader/Loader";
 
 interface AboutScreenProps {
   readonly showScreen: boolean;
@@ -24,6 +25,8 @@ export function AboutScreen({ showScreen }: AboutScreenProps) {
       visible={showScreen}
     >
       <AboutBackground />
+
+      {isLoading && <Loader />}
 
       {content && !isLoading && (
         <>

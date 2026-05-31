@@ -6,9 +6,11 @@ import { ProjectsBackground } from "@/features/projects/components/ProjectsBackg
 import { useSceneStore } from "@/store/sceneStore";
 import { PortfolioView } from "@/core/types/portfolioView";
 import { hideProjectsIconTutorialTime } from "@/core/constants/timing";
-import styles from "./ProjectsScreen.module.css";
-import { ProjectSlider } from "../ProjectSlider/ProjectSlider";
-import { useProjects } from "../../hooks/useProjects";
+import { ProjectSlider } from "./ProjectSlider/ProjectSlider";
+import { useProjects } from "../hooks/useProjects";
+
+import styles from "./index.module.css";
+import { Loader } from "@/ui/components/Loader/Loader";
 
 interface ProjectsScreenProps {
   readonly showScreen: boolean;
@@ -51,9 +53,9 @@ export function ProjectsScreen({ showScreen }: ProjectsScreenProps) {
       rotation={[-Math.PI / 2, 0, 0]}
       visible={showScreen}
     >
-      {isLoading ? (
-        <p className={styles.loading}>Loading projects…</p>
-      ) : (
+      {isLoading && <Loader />}
+
+      {!isLoading && (
         <ProjectSlider
           projects={projects}
           animate={animate}
