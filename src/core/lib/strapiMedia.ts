@@ -1,4 +1,4 @@
-const FALLBACK_IMAGE = "https://via.placeholder.com/150";
+const FALLBACK_IMAGE = "/Images/placeholder.png";
 const apiBaseUrl =
   import.meta.env.STRAPI_API_BASE_URL || "http://localhost:1337";
 

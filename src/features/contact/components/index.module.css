@@ -1,0 +1,36 @@
+:root {
+  --background-color: #002d34;
+  --input-background-color: #b5ebf3;
+  --text-color: #000000;
+  --placeholder-color: #4342428c;
+  --border-color: #b5ebf3;
+}
+.html {
+  background: radial-gradient(circle, #004f5b, var(--background-color));
+  width: 462px;
+  height: 510px;
+  color: var(--text-color);
+}
+
+.noPointer {
+  pointer-events: none;
+}
+
+.contact-title {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 70px;
+  left: 190px;
+  font-family: inherit;
+  font-size: 30px;
+  color: var(--text-color);
+}
+
+.title {
+  position: absolute;
+  top: 40px;
+  left: 70px;
+  font-family: var(--main-font);
+  font-size: 26px;
+  color: var(--text-color);
+}

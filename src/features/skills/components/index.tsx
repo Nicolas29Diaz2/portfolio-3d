@@ -4,7 +4,7 @@ import { Slider } from "@/features/projects/lib/slickSlider";
 // Stylesheets
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import styles from "./SkillsScreen.module.css";
+import styles from "./index.module.css";
 
 // Store & Routing
 import { useSceneStore } from "@/store/sceneStore";
@@ -17,11 +17,11 @@ import { IconTutorial } from "@/ui/components/IconTutorial/IconTutorial";
 import { useScaleAnimation } from "@/ui/hooks/useScaleAnimation";
 
 // Child Feature Components
-import { SkillsBackground } from "../SkillsBackground/SkillsBackground";
-import { SkillsSubtitle } from "../SkillsSubtitle/SkillsSubtitle";
-import { SkillContainer } from "../SkillContainer/SkillContainer";
-import { useSkills } from "../../hooks/useSkills";
-import { SLIDER_CONF } from "../../constants/skills.constants";
+import { SkillsBackground } from "./SkillsBackground/SkillsBackground";
+import { SkillsSubtitle } from "./SkillsSubtitle/SkillsSubtitle";
+import { SkillContainer } from "./SkillContainer/SkillContainer";
+import { useSkills } from "../hooks/useSkills";
+import { SLIDER_CONF } from "../constants/skills.constants";
 
 interface SkillsScreenProps {
   readonly showScreen: boolean;
@@ -110,9 +110,7 @@ export function SkillsScreen({ showScreen }: SkillsScreenProps) {
         </section>
       </section>
 
-      {scale > 0 && (
-        <IconTutorial move top="50%" left="50%" scale={scale} />
-      )}
+      {scale > 0 && <IconTutorial move top="50%" left="50%" scale={scale} />}
     </ScreenHtml>
   );
 }

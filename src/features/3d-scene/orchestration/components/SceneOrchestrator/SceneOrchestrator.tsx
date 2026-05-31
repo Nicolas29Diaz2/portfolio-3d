@@ -11,10 +11,10 @@ import { useIntroSequence } from "@/features/3d-scene/orchestration/hooks/useInt
 import { useSceneVisibility } from "@/features/3d-scene/orchestration/hooks/useSceneVisibility";
 import { MenuScreen } from "@/features/menu/components/MenuScreen/MenuScreen";
 import { ProjectsScreen } from "@/features/projects/components/ProjectsScreen/ProjectsScreen";
-import { MonitorPlaceholder } from "@/features/menu/components/MonitorPlaceholder/MonitorPlaceholder";
 import { useSceneStore } from "@/store/sceneStore";
 import { AboutScreen } from "@/features/about/components";
-import { SkillsScreen } from "@/features/skills/components/SkillsScreen/SkillsScreen";
+import { SkillsScreen } from "@/features/skills/components";
+import { ContactScreen } from "@/features/contact/components/index";
 
 export function SceneOrchestrator() {
   const cameraFocus = useSceneStore((state) => state.cameraFocus);
@@ -29,13 +29,7 @@ export function SceneOrchestrator() {
         )}
       </About3D>
       <Contact3D>
-        <MonitorPlaceholder
-          showScreen={intro.showScreens}
-          label="Contact"
-          distanceFactor={1}
-          position={[0.48, 0.21, 0.44]}
-          rotation={[-Math.PI / 15.4, 0, 0]}
-        />
+        <ContactScreen showScreen={intro.showScreens} />
       </Contact3D>
 
       <Menu3D visible={visibility.showScenario}>

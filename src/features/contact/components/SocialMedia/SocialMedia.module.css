@@ -1,0 +1,45 @@
+.iconNav {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  height: 70px;
+  z-index: 3;
+}
+
+.iconNav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+  transition: transform 0.1s ease;
+  list-style: none;
+  gap: 20px;
+}
+
+.iconNav li {
+  height: 100%;
+  width: auto;
+  border: 4px solid var(--border-color);
+  border-radius: 50%;
+  transition: transform 0.1s ease;
+}
+.iconNav li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+.iconNav li a img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+.iconNav li:hover {
+  transform: scale(1.2);
+}
