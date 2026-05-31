@@ -16,7 +16,7 @@ function mapAboutResponse(response: AboutApiResponse): AboutContent {
     age: String(age),
     role: role ?? "",
     description: description ?? "",
-    imageUrl: resolveStrapiMediaUrl(image?.[0]?.url),
+    imageUrl: resolveStrapiMediaUrl(image?.url),
   };
 }
 
@@ -25,7 +25,6 @@ export async function fetchAbout(): Promise<Result<AboutContent, AppError>> {
     "/about?populate[image][fields][0]=url",
   );
 
-  console.log("fetchAbout result:", result);
   if (isErr(result)) {
     return result;
   }

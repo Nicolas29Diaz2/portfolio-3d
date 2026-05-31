@@ -1,0 +1,12 @@
+.sliderContainer {
+  width: 95%;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.noInteraction {
+  pointer-events: none;
+}
+.interaction {
+  pointer-events: all;
+}

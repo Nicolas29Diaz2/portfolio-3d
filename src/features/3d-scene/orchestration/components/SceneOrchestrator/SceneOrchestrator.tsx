@@ -10,6 +10,7 @@ import { Shelf } from "@/features/3d-scene/models/scenario/Shelf";
 import { useIntroSequence } from "@/features/3d-scene/orchestration/hooks/useIntroSequence";
 import { useSceneVisibility } from "@/features/3d-scene/orchestration/hooks/useSceneVisibility";
 import { MenuScreen } from "@/features/menu/components/MenuScreen/MenuScreen";
+import { ProjectsScreen } from "@/features/projects/components/ProjectsScreen/ProjectsScreen";
 import { MonitorPlaceholder } from "@/features/menu/components/MonitorPlaceholder/MonitorPlaceholder";
 import { useSceneStore } from "@/store/sceneStore";
 import { AboutScreen } from "@/features/about/components";
@@ -41,13 +42,7 @@ export function SceneOrchestrator() {
       </Menu3D>
 
       <Projects3D visible={intro.showProjects}>
-        <MonitorPlaceholder
-          showScreen={intro.showScreens}
-          label="Projects"
-          distanceFactor={2}
-          position={[0, 0.15, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        />
+        <ProjectsScreen showScreen={intro.showScreens} />
       </Projects3D>
 
       <Skills3D>

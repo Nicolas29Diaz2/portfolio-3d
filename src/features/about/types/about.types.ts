@@ -1,15 +1,11 @@
 import type { StrapiImage } from "@/core/types/strapi";
 
-export type AboutImageDto = {
-  readonly url: string;
-};
-
 export type AboutApiResponse = {
   readonly name: string;
   readonly age?: number | string;
   readonly role?: string;
   readonly description?: string;
-  readonly image?: StrapiImage[];
+  readonly image?: StrapiImage;
 };
 
 export type AboutContent = {

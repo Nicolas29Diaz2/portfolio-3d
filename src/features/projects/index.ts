@@ -1,2 +1,3 @@
 /** Projects carousel (Embla) — Phase 10. */
-export {}
+export { ProjectsScreen } from "./components/ProjectsScreen/ProjectsScreen";
+

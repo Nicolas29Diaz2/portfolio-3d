@@ -1,0 +1,117 @@
+.projects-containerSliderItem {
+  height: 600px;
+  margin: 0 26px;
+  position: relative;
+}
+
+.center .slick-center .projects-containerSliderItem {
+  transform: scale(1.2);
+  transition: all 0.5s ease-in-out;
+}
+.center .slick-center .projects-containerSliderItem {
+  opacity: 1;
+}
+.center .projects-containerSliderItem {
+  opacity: 0.5;
+}
+
+.noInteraction {
+  pointer-events: none;
+}
+.interaction {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.projects-containerSliderItem:hover {
+  will-change: opacity;
+  opacity: 0.8;
+  transition: opacity 0.5s;
+}
+
+.titleProject {
+  font-size: 30px;
+}
+
+.ulContainer {
+  position: absolute;
+  top: 290px;
+  left: 50px;
+  width: 244px;
+  height: 220px;
+  color: white;
+}
+
+.ulContainer > ul {
+  list-style-type: none;
+  font-family: var(--main-font);
+}
+
+.ulContainer > ul > li > ul {
+  width: 100%;
+  list-style-type: none;
+  font-family: var(--main-font);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0px 5px;
+  height: 20px;
+}
+
+.ulContainer > ul > li > ul > li::before {
+  content: "•";
+  margin-right: 5px;
+}
+
+.ulContainer > ul li:nth-child(1) h1 {
+  font-size: 30px;
+  line-height: 35px;
+}
+
+.ulContainer > ul > li:nth-child(2) {
+  font-size: 15px;
+  color: #bfbfbf;
+}
+
+.ulContainer > ul > li:nth-child(3) {
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.ulContainer > ul > li:nth-child(4) {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding: 2px;
+}
+
+#link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 470px;
+  left: 180px;
+  width: 100px;
+}
+
+#link a {
+  font-family: var(--main-font);
+  color: black;
+  text-decoration: none;
+  font-size: large;
+  width: 100%;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 50px;
+  background-color: white;
+}
+#link a:hover {
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
+}
