@@ -13,8 +13,9 @@ export type EnvironmentSettingsState = {
   readonly bloom: BloomSettings
 }
 
-/** Hardcoded Dark-branch scene constants (not in Config.js) */
-export const SCENE_ENVIRONMENT_CONSTANTS = {
+export const SCENE_ENVIRONMENT_PRESET = 'sunset' as const
+
+export const DARK_SCENE_CONSTANTS = {
   fogDensity: 0.08,
   starsRadius: 80,
   starsDepth: 100,
@@ -29,10 +30,40 @@ export const SCENE_ENVIRONMENT_CONSTANTS = {
   reflectorMaxDepthThreshold: 1.2,
   reflectorColor: 'rgb(15, 15, 15)',
   reflectorMetalness: 0.5,
-  environmentPreset: 'sunset',
 } as const
 
-/** Legacy SceneConf.jsx Bloom ternaries per gpuTier */
+/** Light theme — SceneConf.jsx Light branch */
+export const LIGHT_SCENE_CONSTANTS = {
+  bloom: {
+    mipmapBlur: true,
+    luminanceThreshold: 2,
+    intensity: 0.2,
+  },
+  vignette: {
+    eskil: false,
+    offset: 0.3,
+    darkness: 0.6,
+  },
+  ambientLightIntensity: 0.01,
+  shadows: {
+    position: [0, 0, 0] as const,
+    frames: 120,
+    alphaTest: 0.9,
+    scale: 15,
+  },
+  randomizedLight: {
+    amount: 1,
+    radius: 0.1,
+    ambient: 0.9,
+    position: [1, 5, -1] as const,
+  },
+  environment: {
+    resolution: 32,
+    background: true,
+    blur: 1,
+  },
+} as const
+
 export function getBloomSettings(gpuTier: GpuTier): BloomSettings {
   if (gpuTier === 3) {
     return {

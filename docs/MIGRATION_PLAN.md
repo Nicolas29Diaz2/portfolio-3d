@@ -14,7 +14,7 @@ The legacy app is a **single-page 3D portfolio** built with React 18 + JavaScrip
 - A **HUD menu button** (hand icon on the main monitor + floating menu/theme buttons)
 - A **cancel button** (+) to return to the character view
 
-Each section renders as an `**Html` overlay** (from `@react-three/drei`) projected onto a corresponding **GLB screen model**. Content is currently **hard-coded** in JS constants; the new project will **fetch it from APIs\*\* using the `HttpClient` + `Result` pattern.
+Each section renders as an `**Html` overlay** (from `@react-three/drei`) projected onto a corresponding **GLB screen model**. Content is currently **hard-coded** in JS constants; the new project will **fetch it from APIs using the `HttpClient` + `Result` pattern.
 
 The migration strategy is **bottom-up**: establish core infrastructure and the 3D shell first, then layer navigation, then migrate screen features one at a time — converting legacy CSS to **strictly organized Plain CSS per component** (preserving all original visual metrics exactly) and static data to typed API contracts.
 
@@ -43,7 +43,10 @@ flowchart TD
 
 ```
 
+
+
 ### 2.2 Legacy Folder Structure (conceptual)
+
 
 | Legacy path                                   | Responsibility                                                                                  |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------- |
@@ -63,7 +66,9 @@ flowchart TD
 | `IconsTutorials/IconTutorial.jsx`             | “Drag to move” tutorial overlay                                                                 |
 | `StylesVariables/` + `*.module.css`           | All styling (to be migrated to organized Plain CSS per component, keeping exact legacy metrics) |
 
+
 ### 2.3 Global State (`Store.js`) — Views Enum
+
 
 | View key    | Triggered by                | Legacy UI                                  |
 | ----------- | --------------------------- | ------------------------------------------ |
@@ -75,16 +80,18 @@ flowchart TD
 | `SKILLS`    | Float button / menu         | Category slider with skill cards           |
 | `CONTACT`   | Float button / menu         | Email form + social links                  |
 
+
 ---
 
 ## 3. Identified Features (Target: `src/features/`)
 
 Each row maps to a **feature domain** in the new architecture.
 
+
 | #   | Feature                    | Legacy source                                   | New target path                                  | API-driven?                                    |
 | --- | -------------------------- | ----------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
 | F1  | **App Shell & Canvas**     | `App.jsx`, `main.jsx`                           | `src/App.tsx`, `src/features/app-shell/`         | No                                             |
-| F2  | **Core / HTTP / Result**   | _(not present)_                                 | `src/core/api/`, `src/core/types/`               | Yes (foundation)                               |
+| F2  | **Core / HTTP / Result**   | *(not present)*                                 | `src/core/api/`, `src/core/types/`               | Yes (foundation)                               |
 | F3  | **Global Store**           | `Store/Store.js`                                | `src/store/` (split by concern)                  | Partial                                        |
 | F4  | **Theme (Light/Dark)**     | `Store.js`, `SceneConf.jsx`, `MenuButtons`, SVG | `src/store/themeStore.ts`, `src/features/theme/` | No                                             |
 | F5  | **Performance / GPU Tier** | `App.jsx`, `Config.js`, `detect-gpu`            | `src/core/performance/`                          | No                                             |
@@ -103,7 +110,9 @@ Each row maps to a **feature domain** in the new architecture.
 | F18 | **UI Primitives**          | `IconTutorial`, SVG icons, shared animations    | `src/ui/`                                        | No                                             |
 | F19 | **Design System / Styles** | `StylesVariables/`, legacy `.css`               | `src/styles/` (global variables, resets)         | No                                             |
 
+
 ### 3.1 Cross-Cutting Concerns to Refactor (not 1:1 ports)
+
 
 | Legacy pattern                                   | New rule                      | Action                                                                                      |
 | ------------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------------------- |
@@ -115,6 +124,7 @@ Each row maps to a **feature domain** in the new architecture.
 | `try/catch` in `App.jsx` (battery API)           | No try/catch in UI            | Wrap in core utility returning `Result`                                                     |
 | Files 150–270 lines (`Scene.jsx`, `Scene3D.jsx`) | Max ~150–200 lines            | Decompose into hooks + subcomponents                                                        |
 
+
 ---
 
 ## 4. Recommended Migration Order
@@ -125,15 +135,17 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** Empty shell matches target folder layout.
 
-| Step | Task                                                                      | Output                                | Status                          |
-| ---- | ------------------------------------------------------------------------- | ------------------------------------- | ------------------------------- |
+
+| Step | Task                                                                      | Output                                | Status                         |
+| ---- | ------------------------------------------------------------------------- | ------------------------------------- | ------------------------------ |
 | 0.1  | Create folder structure: `core/`, `ui/`, `features/`, `store/`, `styles/` | Directories + barrel exports          | ✅                              |
 | 0.2  | Set up global CSS variables and base resets (Light/Dark themes)           | `src/styles/globals.css`              | ✅                              |
-| 0.3  | Install 3D + state  + EmailJS deps (see §6)                        | Updated `package.json`                | ✅                              |
+| 0.3  | Install 3D + state + EmailJS deps (see §6)                                | Updated `package.json`                | ✅                              |
 | 0.4  | Create `public/Models`, `public/Images`, `public/Fonts`                   | Directory placeholders                | ✅ (copy assets before Phase 5) |
 | 0.5  | Port SEO/meta + preload shell from legacy `index.html`                    | `index.html`                          | ✅                              |
 | 0.6  | Port `ZoomDisabler` + wrapper (TypeScript, Plain CSS)                     | `src/ui/components/ZoomDisabler/`     | ✅                              |
 | 0.7  | Configure `@/` path alias + `strict` TypeScript                           | `vite.config.ts`, `tsconfig.app.json` | ✅                              |
+
 
 **Exit criteria:** `npm run dev` serves a styled dark page; `npm run build` passes.
 
@@ -143,15 +155,17 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** Shared infrastructure before any feature code.
 
+
 | Step | Task                                                                     | Legacy reference              | Status |
 | ---- | ------------------------------------------------------------------------ | ----------------------------- | ------ |
-| 1.1  | Implement `AppError` types + `Result<T, E>` helpers (`isOk`, `isErr`)    | New                           | ✅     |
-| 1.2  | Implement `HttpClient` with typed **GET**                                | New                           | ✅     |
-| 1.3  | Port `Times.js` → `src/core/constants/timing.ts`                         | `Constants/Times.js`          | ✅     |
-| 1.4  | Port `Config.js` GPU presets → typed config                              | `Constants/Config.js`         | ✅     |
-| 1.5  | Port `cameraControls.js` → typed responsive camera map                   | `Constants/cameraControls.js` | ✅     |
-| 1.6  | Extract GPU + battery detection into `useDeviceCapabilities` hook (core) | `App.jsx` lines 59–105        | ✅     |
-| 1.7  | Add Toast component in `src/ui/`                                         | New                           | ✅     |
+| 1.1  | Implement `AppError` types + `Result<T, E>` helpers (`isOk`, `isErr`)    | New                           | ✅      |
+| 1.2  | Implement `HttpClient` with typed **GET**                                | New                           | ✅      |
+| 1.3  | Port `Times.js` → `src/core/constants/timing.ts`                         | `Constants/Times.js`          | ✅      |
+| 1.4  | Port `Config.js` GPU presets → typed config                              | `Constants/Config.js`         | ✅      |
+| 1.5  | Port `cameraControls.js` → typed responsive camera map                   | `Constants/cameraControls.js` | ✅      |
+| 1.6  | Extract GPU + battery detection into `useDeviceCapabilities` hook (core) | `App.jsx` lines 59–105        | ✅      |
+| 1.7  | Add Toast component in `src/ui/`                                         | New                           | ✅      |
+
 
 **Exit criteria:** Unit-testable core utilities; no React components beyond Toast stub.
 
@@ -161,12 +175,14 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** Replace monolithic store with focused Zustand slices.
 
+
 | Step | Task                                                                                         | Legacy state fields | Status |
 | ---- | -------------------------------------------------------------------------------------------- | ------------------- | ------ |
-| 2.1  | `sceneStore.ts` — `cameraFocus`, `gpuTier`, `isCharacterAnimStarted`                         | Camera + GPU        | ✅     |
-| 2.2  | `navigationStore.ts` — start/cancel/menu button visibility, `menuOption`, `showFloatButtons` | UI navigation       | ✅     |
-| 2.3  | `themeStore.ts` — `sceneTheme`, `setSceneTheme`                                              | Theme toggle        | ✅     |
-| 2.4  | `PortfolioView` enum used for `cameraFocus` and `menuOption`                                 | `Store.js` `views`  | ✅     |
+| 2.1  | `sceneStore.ts` — `cameraFocus`, `gpuTier`, `isCharacterAnimStarted`                         | Camera + GPU        | ✅      |
+| 2.2  | `navigationStore.ts` — start/cancel/menu button visibility, `menuOption`, `showFloatButtons` | UI navigation       | ✅      |
+| 2.3  | `themeStore.ts` — `sceneTheme`, `setSceneTheme`                                              | Theme toggle        | ✅      |
+| 2.4  | `PortfolioView` enum used for `cameraFocus` and `menuOption`                                 | `Store.js` `views`  | ✅      |
+
 
 **Import rule:** No barrel `index.ts` in `src/store/` — import slices directly (e.g. `@/store/sceneStore`).
 
@@ -178,12 +194,14 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** Reusable pieces needed by loading, navigation, and screens.
 
+
 | Step | Task                                                                    | Legacy reference                  | Status |
 | ---- | ----------------------------------------------------------------------- | --------------------------------- | ------ |
-| 3.1  | `useScaleAnimation` → typed hook in `src/ui/hooks/useScaleAnimation.ts` | `Animation/useScaleAnimation.jsx` | ✅     |
-| 3.2  | `IconTutorial` component (with `IconTutorial.css`)                      | `IconsTutorials/IconTutorial.jsx` | ✅     |
-| 3.3  | `MenuSvg`, `SwitchThemeSvg` → inline SVG components                     | `Components/SVG/`                 | ✅     |
-| 3.4  | Shared `ScreenHtml` wrapper + `ScreenHtmlDistance` presets              | Repeated in every screen          | ✅     |
+| 3.1  | `useScaleAnimation` → typed hook in `src/ui/hooks/useScaleAnimation.ts` | `Animation/useScaleAnimation.jsx` | ✅      |
+| 3.2  | `IconTutorial` component (with `IconTutorial.css`)                      | `IconsTutorials/IconTutorial.jsx` | ✅      |
+| 3.3  | `MenuSvg`, `SwitchThemeSvg` → inline SVG components                     | `Components/SVG/`                 | ✅      |
+| 3.4  | Shared `ScreenHtml` wrapper + `ScreenHtmlDistance` presets              | Repeated in every screen          | ✅      |
+
 
 **Import rule:** No barrel `index.ts` in new UI primitives — import files directly.
 
@@ -195,6 +213,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** First user-visible feature; gates the 3D experience.
 
+
 | Step | Task                                                                                              | Legacy reference                     | Status  |
 | ---- | ------------------------------------------------------------------------------------------------- | ------------------------------------ | ------- |
 | 4.1  | `LoadingScreen` view component (with `LoadingScreen.css`)                                         | `LoadingScreen/LoadingScreen.jsx`    | Pending |
@@ -202,6 +221,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 4.3  | Slide-in/out animation (Preserve legacy keyframes and percentages exactly in `LoadingScreen.css`) | `Loading.css`, StartButton CSS       | Pending |
 | 4.4  | `useLoadingFlow` hook — progress, show Continue, `navigationStore` actions                        | Logic in `LoadingScreen` + `App.jsx` | Pending |
 | 4.5  | Wire `useProgress` from drei at App level via `useLoadingFlow`                                    | `App.jsx`                            | Pending |
+
 
 **Import rule:** No barrel `index.ts` in `src/features/loading/`. Ensure sequence respects `#preload-logo` DOM clear.
 
@@ -213,6 +233,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** Render the room environment without interactive screens.
 
+
 | Step | Task                                                                                  | Legacy reference              |
 | ---- | ------------------------------------------------------------------------------------- | ----------------------------- |
 | 5.1  | `AppShell` — Canvas setup, even-dimension sizing, DPR from GPU tier                   | `App.jsx`                     |
@@ -221,6 +242,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 5.4  | `useEnvironmentSettings(gpuTier)` hook                                                | `SceneConf.jsx` + `Config.js` |
 | 5.5  | `<Suspense>` + `<Preload all />`                                                      | `App.jsx`                     |
 
+
 **Exit criteria:** Empty 3D scene with floor, stars, and fog renders at 60fps on tier 1–3.
 
 ---
@@ -228,6 +250,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 ### Phase 6 — 3D Scenario & Character (F8, F9, F12) ✅ COMPLETE
 
 **Goal:** Static room + animated character (no screen content yet).
+
 
 | Step | Task                                                                                                | Legacy reference           |
 | ---- | --------------------------------------------------------------------------------------------------- | -------------------------- |
@@ -240,6 +263,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 6.7  | `SceneOrchestrator` — visibility logic from `Scene3D.jsx` (character/chair/projects/cables toggles) | `Scene3D.jsx`              |
 | 6.8  | `useIntroSequence` hook — intro sit animation, helmet, dissolve eyes, show screens delay            | `Scene3D.jsx` + `Times.js` |
 
+
 **Exit criteria:** Full room visible after Continue; character intro + sit animation plays.
 
 ---
@@ -247,6 +271,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 ### Phase 7 — Camera & 3D Navigation (F10) ✅ COMPLETE
 
 **Goal:** User can orbit the room and click float buttons.
+
 
 | Step | Task                                                                           | Legacy reference          |
 | ---- | ------------------------------------------------------------------------------ | ------------------------- |
@@ -256,6 +281,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 7.4  | Place float buttons at legacy positions for ABOUT, PROJECTS, SKILLS, CONTACT   | `Scene.jsx` lines 244–267 |
 | 7.5  | Initial camera intro animation on load                                         | `App.jsx` + `Scene.jsx`   |
 
+
 **Exit criteria:** Camera moves between CHARACTER and each view; responsive breakpoints match legacy.
 
 ---
@@ -263,6 +289,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 ### Phase 8 — Navigation HUD (F11, F13 shell) ✅ COMPLETE
 
 **Goal:** Overlay controls outside the Canvas.
+
 
 | Step | Task                                                   | Legacy reference                  |
 | ---- | ------------------------------------------------------ | --------------------------------- |
@@ -273,6 +300,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 8.5  | `MenuNavButtons` — SKILLS / ABOUT / PROJECTS / CONTACT | `Screens/Menu/Buttons/`           |
 | 8.6  | `ZoomDisablerWrapper` at app root (ported Phase 0)     | `src/ui/components/ZoomDisabler/` |
 
+
 **Exit criteria:** Full navigation loop works with **placeholder** screen content. ✅
 
 ---
@@ -281,6 +309,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 
 **Goal:** Screen de contenido dinámico; valida el patrón de API + HTML-on-GLB.
 
+
 | Step | Task                                         | Legacy Reference         |
 | ---- | -------------------------------------------- | ------------------------ |
 | 9.1  | Definir tipos `AboutApi` + contrato API      | `About.jsx` (Hard-coded) |
@@ -288,13 +317,15 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 9.3  | `AboutScreen` (Background, Info, Imagen)     | `Screens/About/`         |
 | 9.4  | Montaje en `AboutMonitor`                    | `About3D.jsx`            |
 
+
 **Exit Criteria:** El monitor de About muestra datos de la API; los errores disparan un Toast.
 
 ---
 
-### Phase 10 — Projects Feature (F15)
+### Phase 10 — Projects Feature (F15) COMPLETED ✅
 
 **Goal:** Carrusel dinámico con lista de proyectos y comportamiento de interacción legado.
+
 
 | Step | Task                                       | Legacy Reference                |
 | ---- | ------------------------------------------ | ------------------------------- |
@@ -305,13 +336,15 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 10.6 | Tutorial overlay en foco                   | `Projects.jsx`                  |
 | 10.7 | Ocultar `character/chair` en foco          | `Scene3D.jsx` (104–108)         |
 
+
 **Exit Criteria:** Carrusel carga desde API; interacción de slides coincide con el feeling original.
 
 ---
 
-### Phase 11 — Skills Feature (F16)
+### Phase 11 — Skills Feature (F16) COMPLETED ✅
 
 **Goal:** Slider de categorías con tarjetas de habilidades y navegación personalizada.
+
 
 | Step | Task                                        | Legacy Reference              |
 | ---- | ------------------------------------------- | ----------------------------- |
@@ -321,13 +354,15 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 11.4 | Flechas prev/next personalizadas (SVG)      | `Skills.jsx` (`SampleArrows`) |
 | 11.5 | Tutorial overlay en foco                    | `Skills.jsx`                  |
 
+
 **Exit Criteria:** Skills carga categorías desde la API; el slider navega correctamente.
 
 ---
 
-### Phase 12 — Contact Feature (F17)
+### Phase 12 — Contact Feature (F17) COMPLETED ✅
 
-**Goal:** Formulario de contacto con envío vía API (EmailJS) y gating de eventos.
+**Goal:** Formulario de contacto con envío vía API (EmailJS) y gating de eventos. COMPLETED ✅
+
 
 | Step | Task                                           | Legacy Reference           |
 | ---- | ---------------------------------------------- | -------------------------- |
@@ -337,11 +372,13 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 12.4 | `ContactScreen` con gating de `pointer-events` | `Contact.jsx`              |
 | 12.5 | Implementación vía `@emailjs/browser`          | CDN legacy (Migrado a npm) |
 
+
 **Exit Criteria:** El formulario envía correos exactamente como en el flujo legado.
 
 ---
 
 ### Phase 13 — Integration, Polish & Cleanup
+
 
 | Step | Task                                                                                      |
 | ---- | ----------------------------------------------------------------------------------------- |
@@ -352,6 +389,7 @@ Order is driven by **dependency chain**: each phase must compile and be visually
 | 13.5 | Add error boundary for 3D context (optional, recommended)                                 |
 | 13.6 | E2E smoke test: load → continue → visit all 4 sections → cancel back                      |
 | 13.7 | Production build size check (GLB preload strategy)                                        |
+
 
 ---
 
@@ -421,6 +459,7 @@ src/
 
 ### 6.1 Production Dependencies
 
+
 | Legacy package                | Verdict                     | Notes                                                                                                                       |
 | ----------------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `react` / `react-dom`         | **Keep (already upgraded)** | New project uses **React 19**; verify R3F compatibility before pinning                                                      |
@@ -431,11 +470,16 @@ src/
 | `detect-gpu`                  | **Keep — update**           | GPU tier detection in `App.jsx`                                                                                             |
 | `@react-three/postprocessing` | **Keep — update**           | Bloom + Vignette in `SceneConf.jsx`                                                                                         |
 | `@emailjs/browser`            | **Keep**                    | Contact stays client-side; no backend endpoint                                                                              |
-| `react-slick`                 | **Keep**                 |  Carousel                                                                                                  |
-| `slick-carousel`              | **Keep**                 |  needed                                                                                        |
-                                                         |
+| `react-slick`                 | **Keep**                    | Carousel                                                                                                                    |
+| `slick-carousel`              | **Keep**                    | needed                                                                                                                      |
+
+
+```
+                                                     |
+```
 
 ### 6.2 Dev Dependencies
+
 
 | Legacy package                      | Verdict            | Notes                                         |
 | ----------------------------------- | ------------------ | --------------------------------------------- |
@@ -446,7 +490,9 @@ src/
 | `typescript`                        | **Add**            | Required; not in legacy                       |
 | `@types/three`                      | **Add (optional)** | Helpful for manual Three.js work in Character |
 
+
 ### 6.3 Installed versions (Phase 0 — 2026-05-29)
+
 
 | Package                       | Version  |
 | ----------------------------- | -------- |
@@ -458,12 +504,15 @@ src/
 | `detect-gpu`                  | ^5.0.70  |
 | `@emailjs/browser`            | ^4.4.1   |
 
+
 ### 6.4 CDN / External Scripts
+
 
 | Source                                        | Verdict                                   |
 | --------------------------------------------- | ----------------------------------------- |
 | `@emailjs/browser` CDN in legacy `index.html` | **Removed** — use npm package in Phase 12 |
 | Google Analytics (`gtag.js`)                  | **Kept** in new `index.html`              |
+
 
 ---
 
@@ -471,16 +520,19 @@ src/
 
 These endpoints replace static constants. Adjust paths to match your backend.
 
+
 | Feature  | Method | Suggested endpoint               | Legacy data source                                          |
 | -------- | ------ | -------------------------------- | ----------------------------------------------------------- |
 | About    | `GET`  | `/api/about`                     | Hard-coded bio + image path in `About.jsx`                  |
 | Projects | `GET`  | `/api/projects`                  | `projectsData[]` — 4 real + 2 empty padding entries         |
 | Skills   | `GET`  | `/api/skills`                    | `skillsConf[]` — 4 categories, variable skills per category |
-| Contact  | —      | _(EmailJS client-side — no API)_ | Form fields: `email_id`, `message`                          |
+| Contact  | —      | *(EmailJS client-side — no API)* | Form fields: `email_id`, `message`                          |
+
 
 ---
 
 ## 8. Risk Register
+
 
 | Risk                                        | Impact            | Mitigation                                                                                  |
 | ------------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------- |
@@ -491,23 +543,27 @@ These endpoints replace static constants. Adjust paths to match your backend.
 | Monolithic store hidden coupling            | Bugs during split | Phase 2 mapping table; migrate consumers incrementally                                      |
 | Light theme incomplete in legacy            | Visual gap        | Dark is production default; Light branch exists but less tested — validate in Phase 5       |
 
+
 ---
 
 ## 9. Locked Scope Decisions (Confirmed)
 
-| Topic                          | Decision                                                                                                                                              |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Contact form**               | Keep **EmailJS** (`@emailjs/browser`). Backend will not handle contact. Port existing submit logic in Phase 12.                                       |                                                                               |
-| **Project carousel centering** | Do **not** use fake/empty API padding slides. |
-| **Commented legacy code**      | **Do not port** any commented-out code (includes `Cables` model, disabled `ZoomDisablerWrapper` in legacy `App.jsx`, etc.).                           |
-| `**ZoomDisabler`\*\*           | **Keep** — required for mobile. Ported early to `src/ui/components/ZoomDisabler/` (Phase 0).                                                          |
-| **Light theme**                | **Dark-only for v1.** Light branch in legacy `SceneConf.jsx` is out of scope until a later phase. CSS variables are dark-first for future extension.  |
-| **Loading screen copy**        | **Static** ("Nicolas Diaz / Multimedia Engineer"). Not API-driven.                                                                                    |
-| **Assets**                     | Live under `public/` (`/Models`, `/Images`, `/Fonts`). Copy from legacy deployment artifact before Phase 5.                                           |
+
+| Topic                          | Decision                                                                                                                                             |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Contact form**               | Keep **EmailJS** (`@emailjs/browser`). Backend will not handle contact. Port existing submit logic in Phase 12.                                      |
+| **Project carousel centering** | Do **not** use fake/empty API padding slides.                                                                                                        |
+| **Commented legacy code**      | **Do not port** any commented-out code (includes `Cables` model, disabled `ZoomDisablerWrapper` in legacy `App.jsx`, etc.).                          |
+| `**ZoomDisabler`               | **Keep** — required for mobile. Ported early to `src/ui/components/ZoomDisabler/` (Phase 0).                                                         |
+| **Light theme**                | **Dark-only for v1.** Light branch in legacy `SceneConf.jsx` is out of scope until a later phase. CSS variables are dark-first for future extension. |
+| **Loading screen copy**        | **Static** ("Nicolas Diaz / Multimedia Engineer"). Not API-driven.                                                                                   |
+| **Assets**                     | Live under `public/` (`/Models`, `/Images`, `/Fonts`). Copy from legacy deployment artifact before Phase 5.                                          |
+
 
 ---
 
 ## 10. Effort Estimate (Rough)
+
 
 | Phase                     | Estimated effort                                      |
 | ------------------------- | ----------------------------------------------------- |
@@ -527,6 +583,7 @@ These endpoints replace static constants. Adjust paths to match your backend.
 | 13 – Polish               | 2–3 days                                              |
 | **Total**                 | **~28–40 days** (single developer, including testing) |
 
+
 ---
 
 ## 11. Definition of Done
@@ -544,3 +601,4 @@ These endpoints replace static constants. Adjust paths to match your backend.
 ```
 
 ```
+
