@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styles from "./ProjectCardBackground.module.css";
 import { useDeviceCapabilities } from "@/core";
 
@@ -8,11 +7,7 @@ export const ProjectCardBackground = ({
   animate: boolean;
 }>) => {
   const { gpuTier } = useDeviceCapabilities();
-  const [isLowRes, setLowRes] = useState(false);
-
-  useEffect(() => {
-    setLowRes(gpuTier < 3);
-  }, [gpuTier]);
+  const isLowRes = gpuTier < 3;
 
   return (
     <svg

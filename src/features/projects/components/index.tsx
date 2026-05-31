@@ -30,6 +30,7 @@ export function ProjectsScreen({ showScreen }: ProjectsScreenProps) {
     let iconTimer = 0;
 
     if (isInteractive) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowMoveLogo(true);
       iconTimer = globalThis.setTimeout(
         () => setShowMoveLogo(false),

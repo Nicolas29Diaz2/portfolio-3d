@@ -42,6 +42,7 @@ export function SkillsScreen({ showScreen }: SkillsScreenProps) {
     let timer = 0;
 
     if (isInteractive) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowIconTutorial(true);
       timer = globalThis.setTimeout(() => {
         setShowIconTutorial(false);
