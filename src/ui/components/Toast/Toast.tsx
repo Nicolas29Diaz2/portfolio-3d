@@ -1,14 +1,15 @@
 import type { ToastItem, ToastVariant } from "@/store/toastStore";
+import styles from "./toast.module.css";
 
 type ToastProps = {
   toast: ToastItem;
   onDismiss: (id: string) => void;
 };
 
-const variantStyles: Record<ToastVariant, string> = {
-  error: "border-red-500/40 bg-red-950/90 text-red-100",
-  success: "border-accent/40 bg-surface/95 text-foreground",
-  info: "border-border bg-surface/95 text-foreground",
+const variantClasses: Record<ToastVariant, string> = {
+  error: styles.error,
+  success: styles.success,
+  info: styles.info,
 };
 
 export function Toast({ toast, onDismiss }: Readonly<ToastProps>) {
@@ -16,16 +17,16 @@ export function Toast({ toast, onDismiss }: Readonly<ToastProps>) {
     <div
       role="alert"
       aria-live="assertive"
-      className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg border px-4 py-3 shadow-lg backdrop-blur-sm ${variantStyles[toast.variant]}`}
+      className={`${styles.toast} ${variantClasses[toast.variant]}`}
     >
-      <p className="flex-1 text-sm leading-snug">{toast.message}</p>
+      <p className={styles.message}>{toast.message}</p>
       <button
         type="button"
         aria-label="Dismiss notification"
-        className="text-muted transition-colors hover:text-foreground"
+        className={styles.closeButton}
         onClick={() => onDismiss(toast.id)}
       >
-        ×
+        &times;
       </button>
     </div>
   );

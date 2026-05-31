@@ -99,4 +99,7 @@ function normalizeHeaders(
 
 export const httpClient = new HttpClient({
   baseUrl: import.meta.env.VITE_API_BASE_URL ?? "",
+  defaultHeaders: {
+    authorization: `Bearer ${import.meta.env.VITE_API_TOKEN ?? ""}`,
+  },
 });

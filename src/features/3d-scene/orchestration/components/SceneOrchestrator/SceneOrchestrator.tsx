@@ -12,6 +12,7 @@ import { useSceneVisibility } from "@/features/3d-scene/orchestration/hooks/useS
 import { MenuScreen } from "@/features/menu/components/MenuScreen/MenuScreen";
 import { MonitorPlaceholder } from "@/features/menu/components/MonitorPlaceholder/MonitorPlaceholder";
 import { useSceneStore } from "@/store/sceneStore";
+import { AboutScreen } from "@/features/about/components";
 
 export function SceneOrchestrator() {
   const cameraFocus = useSceneStore((state) => state.cameraFocus);
@@ -21,13 +22,9 @@ export function SceneOrchestrator() {
   return (
     <>
       <About3D>
-        <MonitorPlaceholder
-          showScreen={intro.showScreens}
-          label="About"
-          distanceFactor={1.72}
-          position={[0.3, 0, 0]}
-          rotation={[0, -Math.PI / 2, 0]}
-        />
+        {visibility.chargeScreen && (
+          <AboutScreen showScreen={intro.showScreens} />
+        )}
       </About3D>
       <Contact3D>
         <MonitorPlaceholder
