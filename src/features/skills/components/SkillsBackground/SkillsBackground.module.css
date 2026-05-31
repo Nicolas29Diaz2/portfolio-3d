@@ -1,0 +1,43 @@
+@keyframes skillsDrawLine {
+  to {
+    stroke-dasharray: 2000 0;
+  }
+}
+
+.borderLine {
+  fill: none;
+  stroke: var(--skills-border-stroke-primary);
+  stroke-width: var(--skills-border-stroke-width-primary);
+}
+
+.animationBorderLine {
+  stroke-dasharray: 0 1000;
+  animation: skillsDrawLine 5s ease forwards;
+}
+
+.subtitleContent {
+  fill: url(#contentGradientSubtitle);
+}
+
+.titleContent {
+  fill: var(--skills-border-fill-primary);
+}
+
+.header {
+  position: absolute;
+  top: 48px;
+  left: 170px;
+}
+.header h1 {
+  transform: translate(-50%, -50%);
+  color: var(--skills-font-color-primary);
+}
+
+.sectionCharacter {
+  position: absolute;
+  top: 50px;
+  right: 25px;
+  width: 220px;
+  height: 360px;
+  z-index: 1;
+}

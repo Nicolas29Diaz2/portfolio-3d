@@ -1,0 +1,84 @@
+.svg {
+  width: 320px;
+  height: 32px;
+  position: absolute;
+  top: 25px;
+  left: 350px;
+  margin: auto;
+  z-index: 0;
+}
+
+.textContainer {
+  position: absolute;
+  top: 20px;
+  left: 345px;
+  width: 345px;
+  height: 43px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: url(#mask-subtitle);
+}
+.textContainer h2 {
+  color: var(--skills-font-color-secondary);
+  text-align: center;
+}
+
+@keyframes slideOutRect {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+}
+@keyframes slideInRect {
+  0% {
+    transform: translateX(100%);
+    fill: url(#text-gradient-slideIn);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0%);
+    fill: url(#text-gradient-slideIn);
+    opacity: 0;
+  }
+}
+.rectSliderText {
+  animation:
+    slideInRect 0.5s forwards,
+    slideOutRect 0.5s 0.5s forwards;
+  fill: url(#text-gradient-slideIn);
+}
+
+@keyframes slideInMask {
+  0% {
+    width: 100%;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    width: 0%;
+  }
+}
+@keyframes slideOutMask {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.rectMask {
+  animation:
+    slideInMask 0.5s forwards,
+    slideOutMask 0.5s 0.5s forwards;
+}

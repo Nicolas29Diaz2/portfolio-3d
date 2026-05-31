@@ -1,0 +1,20 @@
+.rectMask {
+  height: 0px;
+  animation: skillPointsMaskAnim 1.5s ease-in-out forwards;
+}
+
+.skillPoints {
+  fill: none;
+  stroke: var(--skills-border-stroke-primary);
+  stroke-width: 1;
+}
+
+.skillPoints.filled {
+  fill: var(--skills-border-stroke-primary);
+}
+
+@keyframes skillPointsMaskAnim {
+  to {
+    height: 55px;
+  }
+}

@@ -14,6 +14,7 @@ import { ProjectsScreen } from "@/features/projects/components/ProjectsScreen/Pr
 import { MonitorPlaceholder } from "@/features/menu/components/MonitorPlaceholder/MonitorPlaceholder";
 import { useSceneStore } from "@/store/sceneStore";
 import { AboutScreen } from "@/features/about/components";
+import { SkillsScreen } from "@/features/skills/components/SkillsScreen/SkillsScreen";
 
 export function SceneOrchestrator() {
   const cameraFocus = useSceneStore((state) => state.cameraFocus);
@@ -46,13 +47,7 @@ export function SceneOrchestrator() {
       </Projects3D>
 
       <Skills3D>
-        <MonitorPlaceholder
-          showScreen={intro.showScreens}
-          label="Skills"
-          distanceFactor={1.72}
-          position={[0, 0.15, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        />
+        <SkillsScreen showScreen={intro.showScreens} />
       </Skills3D>
 
       {visibility.chargeCharacter && (
