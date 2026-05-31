@@ -1,13 +1,14 @@
 import { useState, type SubmitEvent } from "react";
 import emailjs from "@emailjs/browser";
 import styles from "./Form.module.css";
+import { useToastStore } from "@/store/toastStore";
 
 emailjs.init(import.meta.env.VITE_PUBLIC_KEY);
 
 export const Form = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const showError = useToastStore((state) => state.showError);
 
   const handleSubmit = async (
     event: SubmitEvent<HTMLFormElement>,
@@ -18,7 +19,6 @@ export const Form = () => {
 
     setIsLoading(true);
     setIsSuccess(false);
-    setError(null);
 
     try {
       await emailjs.sendForm(
@@ -29,10 +29,8 @@ export const Form = () => {
 
       setIsSuccess(true);
       form.reset();
-    } catch (err) {
-      console.error(err);
-
-      setError(
+    } catch {
+      showError(
         "Message delivery failed. Feel free to use another method below to get in touch.",
       );
     } finally {
@@ -54,10 +52,6 @@ export const Form = () => {
         <p className={styles.textFeedback}>
           I received the message, thank you for contacting me.
         </p>
-      )}
-
-      {error && (
-        <p className={`${styles.textFeedback} ${styles.error}`}>{error}</p>
       )}
     </form>
   );

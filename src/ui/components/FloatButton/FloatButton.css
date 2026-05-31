@@ -1,7 +1,7 @@
 :root {
   --button-border-color: rgb(255, 255, 255);
   --button-hover-color: rgb(0, 159, 203);
-  --button-bg-color: #2e2e2e;
+  --button-bg-color: rgb(0, 159, 203);
   --button-animation: 0.3s;
   --main-font: "Suse", sans-serif;
 }
@@ -20,9 +20,9 @@
 }
 
 .contentFloatButton:hover {
-  background-color: var(--button-hover-color);
-  box-shadow: 0 0 30px 10px var(--button-hover-color);
-  color: var(--button-hover-color);
+  background-color: var(--button-border-color);
+  box-shadow: 0 0 4px 4px var(--button-hover-color);
+  color: var(--button-border-color);
 }
 
 .contentFloatButton::before {
