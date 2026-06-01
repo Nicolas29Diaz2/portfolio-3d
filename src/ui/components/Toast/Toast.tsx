@@ -1,5 +1,5 @@
 import type { ToastItem, ToastVariant } from "@/store/toastStore";
-import styles from "./toast.module.css";
+import styles from "./Toast.module.css";
 
 type ToastProps = {
   toast: ToastItem;
