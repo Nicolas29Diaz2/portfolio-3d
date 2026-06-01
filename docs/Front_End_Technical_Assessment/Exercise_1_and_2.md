@@ -59,3 +59,7 @@ To fully evaluate the solution:
 5. Verify frontend-backend integration through the documented environment configuration.
 
 All required documentation and configuration details are included within the respective repositories.
+
+# Extra 
+You can also visit the deployed site:
+https://nicolas3dportafolio.netlify.app/
