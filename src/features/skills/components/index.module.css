@@ -1,0 +1,99 @@
+:global :root {
+  --skills-background-color: radial-gradient(
+    ellipse 700px 400px at center,
+    rgb(0, 52, 112) 40%,
+    rgb(0, 16, 39) 100%
+  );
+
+  /* BORDERS */
+  --skills-border-stroke-primary: #08bee1;
+  --skills-border-stroke-width-primary: 3;
+  --skills-border-fill-primary: #08bee1;
+
+  /* FONTS */
+  --skills-font-color-primary: #ffffff;
+  --skills-font-color-secondary: #3adeff;
+  --main-font: "Suse", sans-serif;
+}
+
+.html {
+  background: var(--skills-background-color);
+  width: 780px;
+  height: 480px;
+  position: relative;
+}
+
+.noPointer {
+  pointer-events: none;
+}
+
+.sectionSlider {
+  position: absolute;
+  top: 100px;
+  left: 40px;
+  width: 660px;
+  height: 320px;
+  z-index: 1;
+}
+
+.sectionCharacter {
+  position: absolute;
+  top: 50px;
+  right: 25px;
+  width: 220px;
+  height: 360px;
+  z-index: 1;
+}
+
+.sliderContainer {
+  margin: auto;
+  width: 95%;
+  cursor: pointer;
+}
+
+.sliderItem {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+}
+
+.fullContainer {
+  width: 95%;
+  height: 100%;
+  position: relative;
+  left: 20px;
+}
+
+.customSlickArrowPrev {
+  position: absolute;
+  top: 50%;
+  left: -2%;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translate(-50%, -50%) scale(1.5);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.customSlickArrowPrev:hover {
+  transform: translate(-50%, -50%) scale(1.7);
+}
+
+.customSlickArrowNext {
+  position: absolute;
+  top: 50%;
+  right: -5%;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translate(-50%, -50%) scale(1.5);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.customSlickArrowNext:hover {
+  transform: translate(-50%, -50%) scale(1.7);
+}

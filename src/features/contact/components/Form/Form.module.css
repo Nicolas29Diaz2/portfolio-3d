@@ -1,0 +1,74 @@
+.formContainer {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  z-index: 2;
+  font-size: 1rem;
+  font-family: var(--main-font);
+}
+
+.formContainer input {
+  font-family: inherit;
+  font-size: inherit;
+  height: 30px;
+  width: 80%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-background-color);
+  color: inherit;
+}
+
+.formContainer textarea {
+  font-family: inherit;
+  font-size: inherit;
+  width: 80%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-background-color);
+  color: inherit;
+  resize: none;
+}
+.formContainer textarea::placeholder {
+  color: var(--placeholder-color);
+}
+.formContainer input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.formContainer button {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: var(--input-background-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.formContainer button:hover {
+  background-color: #6bdced;
+  transform: scale(1.1);
+}
+
+.textFeecback {
+  font-size: 1.2 rem;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+}
+
+.error {
+  color: rgb(226, 0, 0);
+}

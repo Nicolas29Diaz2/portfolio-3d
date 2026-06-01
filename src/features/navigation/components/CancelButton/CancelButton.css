@@ -1,0 +1,39 @@
+.cancel-button {
+  position: fixed;
+  bottom: 2rem;
+  left: 1.5rem;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cancel-button:hover {
+  background-color: var(--color-accent-muted);
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgb(8 190 225 / 35%);
+}
+
+.cancel-button:active {
+  transform: scale(0.98);
+}
+
+.cancel-button__icon {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+  pointer-events: none;
+}

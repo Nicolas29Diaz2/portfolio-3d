@@ -1,0 +1,42 @@
+.fill {
+  fill: #0098476d;
+}
+.fill2 {
+  fill: #00d262;
+}
+
+.clippedImage {
+  clip-path: url(#imageMask);
+}
+
+.title {
+  font-size: 48px;
+}
+
+.description {
+  font-size: 38px;
+}
+
+.borderThick {
+  stroke: #00d262;
+  stroke-width: 5;
+}
+
+.noFill {
+  fill: none;
+}
+
+.borderThickAnim {
+  will-change: stroke-dasharray;
+  stroke-dasharray: 0 2000;
+  animation: drawLine 2s ease forwards;
+}
+
+.borderThickNoAnim {
+  animation-play-state: paused;
+}
+@keyframes drawLine {
+  to {
+    stroke-dasharray: 5000 0;
+  }
+}

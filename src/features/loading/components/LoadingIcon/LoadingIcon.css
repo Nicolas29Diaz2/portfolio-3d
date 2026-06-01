@@ -1,0 +1,48 @@
+.loading-icon-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+}
+
+.loading-icon-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  z-index: 4;
+  overflow: hidden;
+}
+.loading-icon-fill-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.loading-icon-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #474747;
+}
+
+@keyframes loading-icon-scale-out {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
+.loading-icon-scale-out {
+  will-change: transform;
+  animation: loading-icon-scale-out 0.5s ease-in-out forwards;
+}

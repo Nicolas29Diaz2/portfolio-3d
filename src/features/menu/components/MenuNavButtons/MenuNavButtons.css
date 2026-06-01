@@ -1,0 +1,106 @@
+.menu-nav-button-shape,
+.menu-nav-button-decoration,
+.menu-nav-button-title {
+  transition: all 0.3s ease;
+}
+
+@keyframes menu-nav-increase-height {
+  0% {
+    height: 100%;
+  }
+  25% {
+    height: 100%;
+  }
+  25% {
+    height: 75%;
+  }
+  25% {
+    height: 75%;
+  }
+  50% {
+    height: 50%;
+  }
+  50% {
+    height: 50%;
+  }
+  75% {
+    height: 25%;
+  }
+  75% {
+    height: 25%;
+  }
+  100% {
+    height: 0%;
+  }
+}
+
+@keyframes menu-nav-events {
+  99% {
+    pointer-events: all;
+  }
+  100% {
+    pointer-events: none;
+  }
+}
+
+.menu-nav-cover-buttons-container {
+  position: absolute;
+  width: 240px;
+  height: 220px;
+  top: 55px;
+  left: 40px;
+  z-index: 2;
+  pointer-events: all;
+  animation: menu-nav-events 1.5s forwards;
+}
+
+.menu-nav-cover-buttons {
+  position: absolute;
+  background-color: #48d0e4;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  animation: menu-nav-increase-height 1.5s forwards;
+}
+
+.menu-nav-container-button {
+  cursor: pointer;
+  position: absolute;
+  left: 70px;
+  z-index: 1;
+  background: none;
+  border: none;
+}
+.menu-nav-button-shape {
+  fill: rgb(255, 255, 255);
+  stroke: #ffffff;
+  stroke-width: 5;
+}
+
+.menu-nav-button-decoration {
+  fill: rgb(255, 255, 255);
+  stroke: #000000;
+  stroke-width: 5;
+}
+
+.menu-nav-container-button:hover .menu-nav-button-decoration {
+  fill: #000000;
+  stroke: #ffffff;
+}
+
+.menu-nav-container-button:hover .menu-nav-button-shape {
+  fill: #000000;
+}
+
+.menu-nav-container-button:hover .menu-nav-button-title {
+  color: #ffffff;
+}
+
+.menu-nav-button-title {
+  color: #000000;
+  font-size: 20px;
+  position: absolute;
+  top: 22px;
+  left: 95px;
+  transform: translate(-50%, -50%);
+}

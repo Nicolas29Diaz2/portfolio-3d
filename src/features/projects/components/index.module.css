@@ -1,0 +1,16 @@
+.html {
+  background: radial-gradient(
+    ellipse 1400px 1000px at center,
+    rgb(0, 86, 50) 10%,
+    rgb(0, 39, 5) 100%
+  );
+  border: 10px solid black;
+  width: 1324px;
+  height: 774px;
+  align-content: center;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 70px;
+}

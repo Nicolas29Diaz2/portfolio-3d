@@ -1,0 +1,137 @@
+.products-page-footer {
+  border-top: 1px solid #2d2d2d;
+  background: #0a0a0a;
+  padding: 48px 20px 56px;
+  margin-top: auto;
+}
+
+.products-page-footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products-page-footer__title {
+  margin: 0 0 28px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-muted);
+}
+
+.products-page-footer__columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+
+.products-page-footer__section-title {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.products-page-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.products-page-footer__link {
+  color: rgb(255 255 255 / 78%);
+  text-decoration: none;
+  font-size: 0.9rem;
+  position: relative;
+  width: fit-content;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.products-page-footer__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: var(--color-accent);
+  transition: width 0.25s ease;
+}
+
+.products-page-footer__link:hover {
+  color: var(--color-foreground);
+  opacity: 1;
+}
+
+.products-page-footer__link:hover::after {
+  width: 100%;
+}
+
+.products-page-footer__skeleton-title {
+  width: 120px;
+  height: 18px;
+  margin-bottom: 28px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #2a2a2a 50%,
+    #1a1a1a 100%
+  );
+  background-size: 200% 100%;
+  animation: products-footer-shimmer 1.4s ease-in-out infinite;
+}
+
+.products-page-footer__skeleton-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.products-page-footer__skeleton-line {
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #2a2a2a 50%,
+    #1a1a1a 100%
+  );
+  background-size: 200% 100%;
+  animation: products-footer-shimmer 1.4s ease-in-out infinite;
+}
+
+.products-page-footer__skeleton-line--heading {
+  width: 60%;
+  height: 14px;
+}
+
+.products-page-footer__skeleton-line--link {
+  width: 80%;
+}
+
+@keyframes products-footer-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .products-page-footer__columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .products-page-footer__columns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

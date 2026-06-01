@@ -1,0 +1,55 @@
+/* * Dark-only theme (v1). 
+ * Standard CSS variables for global access.
+ */
+ :root {
+  --color-background: rgb(10 10 10);
+  --color-background-deep: rgb(0 0 0);
+  --color-foreground: rgb(255 255 255);
+  --color-muted: rgb(160 160 160);
+  --color-accent: rgb(8 190 225);
+  --color-accent-muted: rgb(72 208 228);
+  --color-surface: rgb(15 15 15);
+  --color-border: rgb(40 40 40);
+  --color-preload: rgb(72 208 228);
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-background-deep);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes tutorial-move {
+  0%,
+  100% {
+    transform: translate(-30%, -20%);
+  }
+  50% {
+    transform: translate(-70%, -20%);
+  }
+}
+
+.animate-tutorial-move {
+  animation: tutorial-move 1.2s ease-in-out infinite;
+}

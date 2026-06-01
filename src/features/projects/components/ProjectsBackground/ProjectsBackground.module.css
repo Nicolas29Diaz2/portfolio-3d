@@ -1,0 +1,20 @@
+.fill {
+  fill: #00d262;
+}
+
+.borderLine {
+  stroke: #00d262;
+  stroke-width: 7;
+}
+
+.noFill {
+  fill: none;
+}
+
+.title {
+  position: absolute;
+  top: 20px;
+  left: 505px;
+  font-size: 55px;
+  font-family: var(--main-font);
+}

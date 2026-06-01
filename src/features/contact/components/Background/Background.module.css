@@ -1,0 +1,15 @@
+:root {
+  --contact-border-line: #b5ebf3;
+}
+
+.borderLine {
+  fill: none;
+  stroke: var(--contact-border-line);
+  stroke-width: 4;
+}
+
+.borderLine2 {
+  fill: var(--contact-border-line);
+  stroke: var(--contact-border-line);
+  stroke-width: 4;
+}

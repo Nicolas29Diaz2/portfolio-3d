@@ -1,0 +1,63 @@
+.skillContainer {
+  position: relative;
+}
+
+.imgContainer {
+  position: absolute;
+  width: 90px;
+  height: 77px;
+  top: 36px;
+  left: 15px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 41% 100%, 41% 46%, 0 46%);
+}
+
+.imgContainer img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.textContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 120px;
+  width: 160px;
+}
+.textContainer p {
+  font-family: var(--main-font);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--skills-font-color-secondary);
+  text-align: center;
+  padding: 5px;
+}
+
+.borderLine {
+  fill: none;
+  stroke: var(--skills-border-stroke-primary);
+  stroke-width: 3;
+}
+
+.borderLine2 {
+  fill: none;
+  stroke: var(--skills-border-stroke-primary);
+  stroke-width: 6;
+}
+
+@keyframes skillsDrawLine {
+  0% {
+    stroke-dasharray: 0 1000;
+  }
+  17% {
+    stroke-dasharray: 0 1000;
+  }
+  100% {
+    stroke-dasharray: 2000 0;
+  }
+}
+.animationBorderLine {
+  stroke-dasharray: 0 1000;
+  animation: skillsDrawLine 5s ease forwards;
+}
