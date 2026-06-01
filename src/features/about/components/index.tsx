@@ -37,7 +37,10 @@ export function AboutScreen({ showScreen }: AboutScreenProps) {
           </section>
 
           <section className={styles.imageContainer}>
-            <img src={content.imageUrl} alt="IconAbout" />
+            <img
+              src={content.imageUrl}
+              alt={`${content.name}`}
+            />
           </section>
         </>
       )}

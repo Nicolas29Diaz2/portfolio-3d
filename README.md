@@ -231,8 +231,8 @@ Only patterns with direct evidence in the codebase are documented below.
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Purpose**    | Transform Strapi API response shapes into frontend domain contracts                                                                                                                                                                             |
 | **Benefits**   | Decouples UI from CMS schema; normalizes optional fields and media URLs                                                                                                                                                                         |
-| **Trade-offs** | Mappers are inline in services rather than centralized; skills mapping lives in the hook instead of the service                                                                                                                                 |
-| **Location**   | `about.service.ts` (`mapAboutResponse`), `projects.service.ts` (`mapProjectResponse`), `fetchProductsPageContent.service.ts` (`mapProductsPageResponse`), `fetchFakeProducts.service.ts` (inline `.map()`), `useSkills.ts` (`mapSkillResponse`) |
+| **Trade-offs** | Mappers are inline in services rather than centralized                                                                                                                                                                             |
+| **Location**   | `about.service.ts` (`mapAboutResponse`), `projects.service.ts` (`mapProjectResponse`), `fetchProductsPageContent.service.ts` (`mapProductsPageResponse`), `fetchFakeProducts.service.ts` (inline `.map()`), `skills.service.ts` (`mapSkillResponse`) |
 
 
 ### Custom Hooks Pattern
@@ -449,7 +449,7 @@ Feature Hook → Feature Service → HttpClient.get() → Strapi / External API
               → setState with domain data
 ```
 
-- **Singleton client:** `httpClient` configured with `VITE_API_BASE_URL` and Bearer `VITE_API_TOKEN`
+- **Singleton client:** `httpClient` configured with `VITE_STRAPI_BASE_URL` and Bearer `VITE_STRAPI_TOKEN`
 - **Secondary client:** `fetchFakeProducts.service.ts` creates a dedicated `HttpClient` for `https://fakestoreapi.com`
 
 ### DTO Contracts
@@ -471,7 +471,7 @@ Strapi responses are wrapped in `StrapiResponse<T>` (`{ data: T }`) from `src/co
 ### Mapping Strategy
 
 - **Service-level mapping:** About, Projects, Products page, FakeStore products
-- **Hook-level mapping:** Skills (`mapSkillResponse` in `useSkills.ts`) plus grouping/chunking into `SkillGroup[]`
+- **Hook-level mapping:** Skills grouping/chunking into `SkillGroup[]`
 - **Pass-through:** Contact (identical API and domain shapes)
 
 Media URLs are resolved via `resolveStrapiMediaUrl()` in `src/core/lib/strapiMedia.ts`, with fallback to `/Images/placeholder.png`.
@@ -484,7 +484,7 @@ Components do not call `fetch` directly for CMS data. They consume hooks that re
 
 ## API Contracts
 
-All endpoints discovered in the codebase. Base URL for Strapi requests: `VITE_API_BASE_URL`.
+All endpoints discovered in the codebase. Base URL for Strapi requests: `VITE_STRAPI_BASE_URL`.
 
 ### Strapi CMS (via `httpClient`)
 
@@ -493,12 +493,12 @@ All endpoints discovered in the codebase. Base URL for Strapi requests: `VITE_AP
 | ------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------- |
 | `GET /about?populate[image][fields][0]=url`                                     | `fetchAbout()`               | `AboutContent`                        |
 | `GET /projects?populate[thumbnail][fields][0]=url`                              | `fetchProjects()`            | `readonly ProjectContent[]`           |
-| `GET /skills?populate[icon][fields][0]=url`                                     | `fetchSkills()`              | `SkillApiResponse[]` (mapped in hook) |
+| `GET /skills?populate[icon][fields][0]=url`                                     | `fetchSkills()`              | `readonly SkillContent[]` |
 | `GET /contact`                                                                  | `fetchContact()`             | `ContactContent`                      |
 | `GET /product?populate[banner]…&populate[bannerMobile]…&populate[footerLinks]…` | `fetchProductsPageContent()` | `ProductsPageContent`                 |
 
 
-**Authentication:** Bearer token via `VITE_API_TOKEN` header on all Strapi requests.
+**Authentication:** Bearer token via `VITE_STRAPI_TOKEN` header on all Strapi requests.
 
 ### External API
 
@@ -634,15 +634,15 @@ VITE_PUBLIC_KEY=
 VITE_SERVICE_ID=
 
 # Strapi CMS — content API
-VITE_API_BASE_URL=
-VITE_API_TOKEN=
+VITE_STRAPI_BASE_URL=
+VITE_STRAPI_TOKEN=
 ```
 
 #### Local Strapi
 
 ```env
-VITE_API_BASE_URL=http://localhost:1337
-VITE_API_TOKEN=<your-local-strapi-api-token>
+VITE_STRAPI_BASE_URL=http://localhost:1337
+VITE_STRAPI_TOKEN=<your-local-strapi-api-token>
 ```
 
 Intended for local development when running a Strapi instance alongside the frontend.
@@ -650,15 +650,15 @@ Intended for local development when running a Strapi instance alongside the fron
 #### Hosted Strapi (demonstration)
 
 ```env
-VITE_API_BASE_URL=https://competent-action-988b45f768.strapiapp.com
-VITE_API_TOKEN=<provided-api-token>
+VITE_STRAPI_BASE_URL=https://competent-action-988b45f768.strapiapp.com
+VITE_STRAPI_TOKEN=<provided-api-token>
 ```
 
 - Available for demonstration without a local Strapi instance.
 - Response times may be slower than local execution.
 - Functionality remains operational when credentials are configured.
 
-> **Note:** The codebase uses `VITE_API_BASE_URL` (not `VITE_API_URL`). Media URL resolution in `strapiMedia.ts` additionally references `STRAPI_API_BASE_URL` with a fallback to `http://localhost:1337`; this variable is not declared in `vite-env.d.ts` or `.env.example`.
+Media URL resolution uses `VITE_STRAPI_BASE_URL`.
 
 ---
 
@@ -797,10 +797,8 @@ Scopes are free-form kebab-case strings (e.g., `about`, `3d-scene`, `core-api`, 
 - Configure test coverage reporting (`test:coverage` script)
 - Migrate EmailJS to a backend-controlled endpoint (see [TODO](#todo))
 - Add route-level code splitting (`React.lazy`)
-- Align skills mapping into the service layer for consistency
-- Complete `vite-env.d.ts` declarations for all env vars used in code
 - Resolve `globals.css` comment ("Dark-only theme v1") vs. functional Light theme toggle
-- Implement systematic accessibility audit (keyboard nav for 3D float buttons, ARIA on Html overlays)
+- Implement systematic accessibility audit (ARIA on Html overlays, keyboard navigation)
 
 ---
 
@@ -842,7 +840,6 @@ Scopes are free-form kebab-case strings (e.g., `about`, `3d-scene`, `core-api`, 
 | **Client-side secrets**            | EmailJS keys and Strapi bearer token exposed via `VITE_`* env vars           |
 | **No CI/CD**                       | Tests run only locally via Husky; no automated pipeline detected             |
 | **Low test coverage**              | Only 2 hook test files; no service, mapper, or component tests               |
-| **Inconsistent mapping layer**     | Skills mapping in hook vs. services for other features                       |
 | **EmailJS outside Result pattern** | Contact form uses try/catch while project rules mandate Result for API calls |
 | **Single HTTP method**             | `HttpClient` implements GET only; future write operations require extension  |
 | **Hardcoded EmailJS template**     | `"template_fybb9nr"` embedded in component source                            |
@@ -857,10 +854,8 @@ Scopes are free-form kebab-case strings (e.g., `about`, `3d-scene`, `core-api`, 
 | Test coverage reporting           | Not configured                                                             |
 | Error boundary components         | Not observed                                                               |
 | Route-level code splitting        | Not observed                                                               |
-| Centralized env type declarations | `VITE_API_TOKEN` and `STRAPI_API_BASE_URL` used but not in `vite-env.d.ts` |
 | API response caching              | Not implemented (hooks fetch on every mount)                               |
 | E2E tests                         | Not present                                                                |
-| `.gitignore` coverage output      | No `coverage/` entry                                                       |
 
 
 ### Technical Debt
@@ -868,11 +863,8 @@ Scopes are free-form kebab-case strings (e.g., `about`, `3d-scene`, `core-api`, 
 
 | Item                                | Location                                     | Impact                                                                      |
 | ----------------------------------- | -------------------------------------------- | --------------------------------------------------------------------------- |
-| Skills mapping in hook, not service | `useSkills.ts`                               | Inconsistent data layer; harder to unit test mapping in isolation           |
 | Duplicate Contact types             | `contact.type.ts`                            | `ContactApiResponse` identical to `ContactContent`                          |
-| Env var inconsistency               | `strapiMedia.ts` vs `.env.example`           | `STRAPI_API_BASE_URL` undocumented; media URLs may not match API base       |                                  |
 | Legacy migration incomplete         | `docs/MIGRATION_PLAN.md`                     | Marked as planning-only; some globals.css comments reference "v1" dark-only |
-| `PortfolioPage` internal name       | `PortfolioPage.tsx` exports `App` as default | Naming inconsistency                                                        |
 
 
 ### Scalability Risks
@@ -891,7 +883,7 @@ Scopes are free-form kebab-case strings (e.g., `about`, `3d-scene`, `core-api`, 
 
 | Observation                 | Detail                                                                                                          |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Bearer token in client      | `VITE_API_TOKEN` sent from browser; acceptable for read-only public content but limits token scope requirements |
+| Bearer token in client      | `VITE_STRAPI_TOKEN` sent from browser; acceptable for read-only public content but limits token scope requirements |
 | EmailJS public key exposure | Expected for EmailJS client SDK; spam/abuse risk without server-side rate limiting                              |
 | No input sanitization layer | Contact form relies on EmailJS; no observed XSS sanitization beyond React defaults                              |
 | External API call           | FakeStore API called directly from browser (public API, low risk)                                               |
@@ -904,8 +896,6 @@ Scopes are free-form kebab-case strings (e.g., `about`, `3d-scene`, `core-api`, 
 | Observation           | Detail                                                                              |
 | --------------------- | ----------------------------------------------------------------------------------- |
 | Partial ARIA coverage | Toast (`role="alert"`), some buttons (`aria-label`), semantic HTML on products page |
-| 3D float buttons      | `FloatButton` uses `<div onClick>` without keyboard support or `aria-label`         |
-| Generic alt text      | About image uses `alt="IconAbout"`                                                  |
 | ScreenHtml focus      | Default `tabIndex={0}` on 3D HTML overlays                                          |
 | No skip navigation    | Not observed                                                                        |
 | Color scheme          | `color-scheme: dark` set globally; theme toggle affects 3D environment              |
@@ -934,23 +924,18 @@ Scopes are free-form kebab-case strings (e.g., `about`, `3d-scene`, `core-api`, 
 - **Migrate email delivery from client-side EmailJS to a backend-controlled solution** (Strapi custom controller, serverless function, or dedicated backend endpoint) to improve security, enable rate limiting, and prevent exposing email integration credentials on the client.
 - Add unit tests for remaining data hooks: `useSkills`, `useContact`, `useProductsPageCms`, `useProductsCatalog`.
 - Add unit tests for service layer functions and mappers (About, Projects, Skills, Products).
-- Declare all environment variables in `vite-env.d.ts` and `.env.example` (`VITE_API_TOKEN`, `STRAPI_API_BASE_URL`).
 - Set up CI pipeline to run `npm test` and `npm run lint` on pull requests.
 
 ### Medium Priority
 
-- Move skills mapping (`mapSkillResponse`) from `useSkills.ts` into `skills.service.ts` for consistency with other features.
 - Add `test:coverage` script with `@vitest/coverage-v8` and document coverage thresholds.
 - Extract hardcoded EmailJS template ID (`template_fybb9nr`) to an environment variable.
 - Add React error boundaries around the 3D canvas and route-level shells.
-- Implement keyboard accessibility and ARIA labels for `FloatButton` 3D navigation hotspots.
-- Add `coverage/` to `.gitignore`.
 
 ### Low Priority
 
 - Introduce route-level code splitting with `React.lazy` for `/products`.
 - Consolidate duplicate Contact API/Content types or document intentional pass-through.
-- Rename default export in `PortfolioPage.tsx` from `App` to `PortfolioPage` for clarity.
 - Align `globals.css` documentation with functional Light/Dark theme support.
 - Add E2E tests for critical user flows (loading → navigation → section view).
 

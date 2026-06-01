@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { isErr } from "@/core/api/result";
 import { useToastStore } from "@/store/toastStore";
 import { fetchSkills } from "../services/skills.service";
-import { resolveStrapiMediaUrl } from "@/core/lib/strapiMedia";
 import { CATEGORY_LAYOUT_MAP } from "../constants/skills.constants";
 import type {
-  SkillApiResponse,
-  SkillContent,
   SkillGroup,
   SkillType,
 } from "../types/skills.types";
@@ -16,19 +13,6 @@ interface UseSkillsState {
   readonly isLoading: boolean;
   readonly activeIndex: number;
   readonly setActiveIndex: (index: number) => void;
-}
-
-function mapSkillResponse(apiSkill: SkillApiResponse): SkillContent {
-  const { id, name, type, icon, skillPoints, yPosition } = apiSkill;
-
-  return {
-    id,
-    name,
-    type: type as SkillType,
-    imageUrl: resolveStrapiMediaUrl(icon?.url),
-    points: skillPoints ?? 0,
-    y: yPosition ?? 50,
-  };
 }
 
 function chunkArray<T>(arr: T[], size: number): T[][] {
@@ -56,8 +40,7 @@ export function useSkills(): UseSkillsState {
         showError(result.error);
         setIsLoading(false);
       } else {
-        const rawSkills = result.value;
-        const mappedSkills = rawSkills.map(mapSkillResponse);
+        const skills = result.value;
 
         const typesOrdered: readonly SkillType[] = [
           "web",
@@ -68,7 +51,7 @@ export function useSkills(): UseSkillsState {
         const groups: SkillGroup[] = [];
 
         for (const type of typesOrdered) {
-          const matchingSkills = mappedSkills.filter((s) => s.type === type);
+          const matchingSkills = skills.filter((s) => s.type === type);
           if (matchingSkills.length === 0) continue;
 
           const chunks = chunkArray(matchingSkills, 4);

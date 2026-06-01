@@ -11,7 +11,7 @@ import { NavigationOverlay } from "@/features/navigation/components/NavigationOv
 import { useLoadingFlow } from "@/features/loading/hooks/useLoadingFlow";
 import { useSceneStore } from "@/store/sceneStore";
 
-function App() {
+function PortfolioPage() {
   const { gpuTier, isLoading } = useDeviceCapabilities();
   const sceneGpuTier = useSceneStore((state) => state.gpuTier);
   const setGpuTier = useSceneStore((state) => state.setGpuTier);
@@ -38,4 +38,4 @@ function App() {
   );
 }
 
-export default App;
+export default PortfolioPage;
