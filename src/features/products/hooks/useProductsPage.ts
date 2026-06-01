@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { isErr } from "@/core/api/result";
-import { fetchProductsPageContent } from "@/features/products/services/fetchProductsPageContent";
+import { fetchProductsPageContent } from "@/features/products/services/fetchProductsPageContent.service";
 import { formatProductsApiError } from "@/features/products/lib/formatProductsApiError";
 import type { ProductsPageContent } from "@/features/products/types/products.types";
 import { useToastStore } from "@/store/toastStore";

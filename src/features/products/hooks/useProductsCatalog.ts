@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { isErr } from "@/core/api/result";
-import { fetchFakeProducts } from "@/features/products/services/fetchFakeProducts";
+import { fetchFakeProducts } from "@/features/products/services/fetchFakeProducts.service";
 import { formatProductsApiError } from "@/features/products/lib/formatProductsApiError";
 import type { FakeStoreProduct } from "@/features/products/types/products.types";
 import { useToastStore } from "@/store/toastStore";

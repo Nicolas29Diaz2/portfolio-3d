@@ -34,3 +34,10 @@
   transition: transform 0.3s;
   transform: scale(1.07);
 }
+
+#products-button {
+  width: 10rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-weight: 700;
+}

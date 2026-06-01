@@ -10,7 +10,7 @@ import { ProjectSlider } from "./ProjectSlider/ProjectSlider";
 import { useProjects } from "../hooks/useProjects";
 
 import styles from "./index.module.css";
-import { Loader } from "@/ui/components/Loader/Loader";
+import { Loader } from "@/ui/icons/Loader/Loader";
 
 interface ProjectsScreenProps {
   readonly showScreen: boolean;

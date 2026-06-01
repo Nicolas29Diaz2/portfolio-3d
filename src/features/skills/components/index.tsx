@@ -22,7 +22,7 @@ import { SkillsSubtitle } from "./SkillsSubtitle/SkillsSubtitle";
 import { SkillContainer } from "./SkillContainer/SkillContainer";
 import { useSkills } from "../hooks/useSkills";
 import { SLIDER_CONF } from "../constants/skills.constants";
-import { Loader } from "@/ui/components/Loader/Loader";
+import { Loader } from "@/ui/icons/Loader/Loader";
 
 interface SkillsScreenProps {
   readonly showScreen: boolean;
