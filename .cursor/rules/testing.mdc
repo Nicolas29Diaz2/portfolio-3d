@@ -1,0 +1,162 @@
+# Testing Standards
+
+## Scope
+
+Only modify:
+
+* **tests**
+* test utilities
+* mocks
+* setupTests.ts
+
+Do not modify production code unless explicitly requested.
+
+If production code is difficult to test:
+
+* report the issue
+* explain the dependency
+* propose a solution
+
+Do not refactor production files.
+
+---
+
+## TypeScript
+
+Strict mode is mandatory.
+
+Never use:
+
+* any
+* as any
+* unknown as
+* ts-ignore
+* ts-expect-error
+* eslint-disable
+
+Always reuse existing project types.
+
+Derive mocks from real DTOs and domain contracts.
+
+Never invent data structures.
+
+---
+
+## Testing Stack
+
+Use:
+
+* Vitest
+* React Testing Library
+* renderHook when testing hooks
+* waitFor for async behavior
+
+---
+
+## Test Structure
+
+Follow:
+
+Arrange
+Act
+Assert
+
+Every test must:
+
+* test a single behavior
+* be deterministic
+* be isolated
+* avoid implementation details
+
+---
+
+## Hook Testing
+
+Before creating tests:
+
+1. Identify dependencies.
+2. Identify side effects.
+3. Identify services.
+4. Identify stores.
+5. Identify toast systems.
+
+Mock only external dependencies.
+
+Test behavior, not implementation.
+
+---
+
+## Service Testing
+
+Validate:
+
+* request execution
+* success responses
+* error responses
+* DTO mapping
+
+Never mock the code being tested.
+
+---
+
+## Mapper Testing
+
+Validate:
+
+* raw API contract
+* transformed domain model
+* edge cases
+* null/undefined handling
+
+Mapper tests should have near 100% coverage.
+
+---
+
+## Coverage Priorities
+
+Priority 1
+
+* Domain mappers
+* Services
+
+Priority 2
+
+* Custom hooks
+
+Priority 3
+
+* Complex UI behavior
+
+Priority 4
+
+* Pure presentation components
+
+---
+
+## Execution
+
+After generating tests:
+
+Run the relevant test suite.
+
+Fix test failures.
+
+Do not modify unrelated modules.
+
+Stop once the requested test suite passes.
+
+---
+
+## Architecture
+
+Respect Feature Driven Architecture.
+
+Tests must remain colocated:
+
+feature/
+├── hooks/
+├── services/
+├── types/
+├── **tests**/
+
+Avoid centralized testing folders.
