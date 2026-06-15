@@ -9,13 +9,23 @@ import type {
   SkillType,
 } from "../types/skills.types";
 
+const mapSkillType = (type: string | undefined): SkillType => {
+  const validSkills: SkillType[] = ["web", "tool", "design"];
+
+  if (validSkills.includes(type as SkillType)) {
+    return type as SkillType;
+  }
+
+  return "other";
+};
+
 function mapSkillResponse(apiSkill: SkillApiResponse): SkillContent {
   const { id, name, type, icon, skillPoints, yPosition } = apiSkill;
 
   return {
     id,
     name,
-    type: type as SkillType,
+    type: mapSkillType(type),
     imageUrl: resolveStrapiMediaUrl(icon?.url),
     points: skillPoints ?? 0,
     y: yPosition ?? 50,
