@@ -29,7 +29,7 @@ export const SKILLS_DATA: readonly SkillContent[] = [
     id: 4,
     name: "Docker",
     type: "other",
-    imageUrl: "/Images/placeholder.png",
+    imageUrl: "/Images/SkillsLogos/Docker.webp",
     points: 2,
     y: 50,
   },
