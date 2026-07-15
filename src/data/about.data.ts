@@ -5,6 +5,6 @@ export const ABOUT_DATA: AboutContent = {
   age: "23",
   role: "Full Stack Developer",
   description:
-    "Multimedia Engineer and Full Stack Developer with 1.5 years of experience building modern web applications across frontend and backend technologies. Focused on scalable solutions, problem-solving, and delivering business value through user-centered development.",
+    "Multimedia Engineer and Full Stack Developer with nearly 2 years of experience building modern web applications across frontend and backend technologies. Focused on scalable solutions, problem-solving, and delivering business value through user-centered development.",
   imageUrl: "/Images/AboutImages/Yo.webp",
 };
