@@ -16,7 +16,7 @@ export const PROJECTS_DATA: readonly ProjectContent[] = [
     tags: ["NextJS", "NestJS", "Cloudfare", "PostgreSQL", "Lemonsqueezy"],
     description:
       "Volio Studio is a platform for creating interactive photo albums and digital magazines with an intuitive professional editor.",
-    link: "https://voliostudio.vercel.app",
+    link: "https://www.volio-studio.com/es",
     image: "/Images/Projects/volio.png",
   },
   {
