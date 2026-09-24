@@ -123,31 +123,40 @@
         display: none;
       }
 
-      /* Fallback styles for AI crawlers & non-JS scrapers */
+      /* Screen-reader & AI crawler accessible fallback (Prevents visual flash of unstyled content) */
       .ai-fallback-content {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 3rem 1.5rem;
-        line-height: 1.6;
-      }
-      .ai-fallback-content h1 {
-        font-size: 2.2rem;
-        margin-bottom: 0.5rem;
-      }
-      .ai-fallback-content h2 {
-        font-size: 1.5rem;
-        margin: 2rem 0 1rem;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        padding-bottom: 0.4rem;
-      }
-      .ai-fallback-content ul {
-        margin-left: 1.5rem;
-        margin-bottom: 1rem;
-      }
-      .ai-fallback-content a {
-        color: #f5f5f7;
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        clip-path: inset(50%) !important;
+        white-space: normal !important;
+        border: 0 !important;
       }
     </style>
+    <noscript>
+      <style>
+        .ai-fallback-content {
+          position: static !important;
+          width: auto !important;
+          height: auto !important;
+          overflow: visible !important;
+          clip: auto !important;
+          clip-path: none !important;
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 3rem 1.5rem;
+          line-height: 1.6;
+        }
+        .ai-fallback-content h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .ai-fallback-content h2 { font-size: 1.5rem; margin: 2rem 0 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.4rem; }
+        .ai-fallback-content ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .ai-fallback-content a { color: #f5f5f7; }
+      </style>
+    </noscript>
     <script>
       // Display splash ONLY if directly requesting /3d
       if (window.location.pathname.startsWith('/3d')) {
