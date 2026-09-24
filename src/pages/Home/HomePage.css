@@ -1,0 +1,75 @@
+.home-2d-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #07090e;
+  color: #f1f5f9;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+}
+
+/* Global scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07090e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(8, 190, 225, 0.5);
+}
+
+/* Shared typography and utility classes */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #38bdf8 0%, #08bee1 50%, #48d0e4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+section {
+  scroll-margin-top: 5.5rem;
+}
+
+.section-header {
+  margin-bottom: 2.75rem;
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #08bee1;
+  margin-bottom: 0.5rem;
+}
+
+.section-heading {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0 0 0.85rem;
+}
+
+.section-subheading {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  max-width: 680px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mini-icon {
+  width: 14px;
+  height: 14px;
+}

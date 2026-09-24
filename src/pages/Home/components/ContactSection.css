@@ -1,0 +1,188 @@
+.contact-section {
+  position: relative;
+  padding: 4.5rem 1.5rem 3rem;
+}
+
+.contact-container {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* 2x2 Fast Contact Grid */
+.contact-fast-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.contact-tile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.4rem;
+  background: rgba(13, 19, 33, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.15rem;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.contact-tile:hover {
+  background: rgba(13, 19, 33, 0.8);
+  border-color: rgba(8, 190, 225, 0.3);
+  transform: translateY(-2px);
+}
+
+.tile-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #94a3b8;
+}
+
+.tile-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.tile-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tile-val {
+  font-size: 0.92rem;
+  color: #f1f5f9;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.tile-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.contact-tile:hover .tile-action-btn {
+  background: rgba(8, 190, 225, 0.15);
+  border-color: rgba(8, 190, 225, 0.3);
+  color: #38bdf8;
+}
+
+/* Resume Hub */
+.resume-hub {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(13, 19, 33, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.resume-hub-title {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.resume-hub-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.resume-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.pill-primary {
+  background: #ffffff;
+  color: #05070a;
+}
+
+.pill-primary:hover {
+  background: #f1f5f9;
+  transform: translateY(-1px);
+}
+
+.pill-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pill-secondary:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+}
+
+@media (max-width: 680px) {
+  .contact-section {
+    padding: 2.75rem 1rem 2rem;
+  }
+  .contact-fast-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .contact-tile {
+    padding: 0.95rem 1.15rem;
+    border-radius: 1rem;
+  }
+  .resume-hub {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.15rem 1rem;
+  }
+  .resume-hub-links {
+    width: 100%;
+    flex-direction: column;
+  }
+  .resume-pill-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
