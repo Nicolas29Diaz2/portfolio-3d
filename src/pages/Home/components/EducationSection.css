@@ -1,0 +1,113 @@
+.education-section {
+  position: relative;
+  padding: 2.5rem 1.5rem;
+}
+
+.education-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.education-compact-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.15rem;
+  padding: 1.75rem 2rem;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.education-compact-card:hover {
+  border-color: var(--border-active);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.education-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.education-icon-box svg {
+  width: 22px;
+  height: 22px;
+}
+
+.education-info {
+  flex-grow: 1;
+}
+
+.education-top-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.3rem;
+}
+
+.education-degree-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.education-distinction-badge {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+}
+
+.education-meta-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+}
+
+.education-subnote {
+  font-size: 0.86rem;
+  color: #d1d1d6;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 680px) {
+  .education-section {
+    padding: 1.5rem 1rem;
+  }
+  .education-compact-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.15rem 1rem;
+    gap: 1rem;
+    border-radius: 1rem;
+  }
+  .education-degree-title {
+    font-size: 1.05rem;
+  }
+}
+
+

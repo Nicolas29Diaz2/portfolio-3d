@@ -8,36 +8,59 @@
       maximum-scale="1.0"
       user-scalable="0"
     />
-    <title>Nicolas Diaz 3D Portafolio</title>
+    <title>Nicolas Diaz | Full Stack Software Engineer</title>
 
     <link rel="shortcut icon" href="/Images/Icons/Logo.webp" />
     <meta
       name="description"
-      content="Nicolas Diaz's 3D Portfolio showcasing a creative and innovative 3D design using React Three Fiber and Drei."
+      content="Full Stack Software Engineer specializing in React, Next.js, TypeScript, NestJS, and 3D WebGL experiences. Founder of Volio Studio and Multimedia Engineer."
     />
     <meta
       name="keywords"
-      content="3D Portfolio, Creative Portfolio, Nicolas Diaz, React Three Fiber, Drei, 3D Designs, WebGL, Interactive Portfolio, 3D Art, 3D Modeling, 3D Animation"
+      content="Nicolas Diaz, Full Stack Engineer, Software Engineer, React, Next.js, NestJS, Three.js, WebGL, TypeScript, Docker, Redis, Volio Studio"
     />
     <meta name="author" content="Nicolas Diaz" />
-    <meta property="og:title" content="Nicolas Diaz 3D Portfolio" />
+    <meta property="og:title" content="Nicolas Diaz | Full Stack Software Engineer" />
     <meta
       property="og:description"
-      content="Explore the creative and innovative 3D design of Nicolas Diaz, built with React Three Fiber and Drei."
+      content="Full Stack Engineer building resilient architectures, scalable microservices, and interactive 3D web experiences."
     />
-    <meta property="og:image" content="/Images/Icons/Logo.webp" />
+    <meta property="og:image" content="/Images/Projects/Portfolio.webp" />
     <meta
       property="og:url"
       content="https://nicolas3dportafolio.netlify.app/"
     />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Nicolas Diaz 3D Portfolio" />
+    <meta name="twitter:title" content="Nicolas Diaz | Full Stack Software Engineer" />
     <meta
       name="twitter:description"
-      content="Discover the creative 3D works of Nicolas Diaz, crafted with React Three Fiber and Drei."
+      content="Full Stack Engineer building resilient architectures, scalable microservices, and interactive 3D web experiences."
     />
-    <meta name="twitter:image" content="/Images/Icons/Logo.webp" />
+    <meta name="twitter:image" content="/Images/Projects/Portfolio.webp" />
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Nicolas Diaz",
+        "jobTitle": "Full Stack Software Engineer",
+        "url": "https://nicolas3dportafolio.netlify.app/",
+        "sameAs": [
+          "https://www.linkedin.com/in/nicolassdiazs",
+          "https://github.com/Nicolas29Diaz2"
+        ]
+      }
+    </script>
 
     <style>
       * {
@@ -46,8 +69,10 @@
         box-sizing: border-box;
       }
       body {
-        overflow: hidden;
-        background-color: #000000;
+        background-color: #07090e;
+        color: #f1f5f9;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        overflow-x: hidden;
       }
 
       #preload-screen {
@@ -57,16 +82,24 @@
         width: 100%;
         height: 100%;
         background-color: #48d0e4;
-        z-index: 1;
+        z-index: 9999;
+        display: none;
       }
       #preload-logo {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 8;
+        z-index: 10000;
+        display: none;
       }
     </style>
+    <script>
+      // Display splash ONLY if directly requesting /3d
+      if (window.location.pathname.startsWith('/3d')) {
+        document.write('<style>#preload-screen, #preload-logo { display: block !important; } body { overflow: hidden; }</style>');
+      }
+    </script>
   </head>
   <body>
     <div id="preload-screen"></div>

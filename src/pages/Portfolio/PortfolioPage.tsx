@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Preload } from "@react-three/drei";
 import { useDeviceCapabilities } from "@/core/performance/useDeviceCapabilities";
 import { AppShell } from "@/features/app-shell/components/AppShell/AppShell";
@@ -10,6 +11,7 @@ import { LoadingScreen } from "@/features/loading/components/LoadingScreen/Loadi
 import { NavigationOverlay } from "@/features/navigation/components/NavigationOverlay/NavigationOverlay";
 import { useLoadingFlow } from "@/features/loading/hooks/useLoadingFlow";
 import { useSceneStore } from "@/store/sceneStore";
+import "./PortfolioPage.css";
 
 function PortfolioPage() {
   const { gpuTier, isLoading } = useDeviceCapabilities();
@@ -19,6 +21,15 @@ function PortfolioPage() {
   const moveInitialCamera = useInitialCameraMove();
 
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isLoading) {
       setGpuTier(gpuTier);
     }
@@ -26,6 +37,9 @@ function PortfolioPage() {
 
   return (
     <>
+      <Link to="/" className="portfolio-return-2d-btn" title="Back to 2D Portfolio">
+        <span>← 2D Mode</span>
+      </Link>
       <LoadingScreen {...loadingScreenProps} />
       <NavigationOverlay />
       <AppShell gpuTier={sceneGpuTier}>
@@ -39,3 +53,4 @@ function PortfolioPage() {
 }
 
 export default PortfolioPage;
+
