@@ -12,7 +12,7 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background-color: var(--color-accent);
+  background-color: var(--color-accent, rgb(8 190 225));
   cursor: pointer;
   transition:
     transform 0.2s ease,
@@ -21,7 +21,7 @@
 }
 
 .cancel-button:hover {
-  background-color: var(--color-accent-muted);
+  background-color: var(--color-accent-muted, rgb(72 208 228));
   transform: scale(1.06);
   box-shadow: 0 4px 14px rgb(8 190 225 / 35%);
 }

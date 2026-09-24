@@ -13,7 +13,7 @@ export function FloatingMenuBar({ visible }: Readonly<FloatingMenuBarProps>) {
   if (!visible) return null;
 
   const iconColor =
-    sceneTheme === "Dark" ? "var(--color-surface)" : "var(--color-foreground)";
+    sceneTheme === "Dark" ? "var(--color-surface, #0f0f0f)" : "var(--color-foreground, #ffffff)";
 
   return (
     <header className="floating-menu-bar" aria-label="Floating navigation menu">

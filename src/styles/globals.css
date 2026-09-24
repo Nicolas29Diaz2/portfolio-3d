@@ -18,6 +18,31 @@
 
   --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-mono: 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  /* 3D Scene HUD & UI Backward-Compatible Tokens */
+  --color-background: rgb(10 10 10);
+  --color-background-deep: rgb(0 0 0);
+  --color-foreground: rgb(255 255 255);
+  --color-muted: rgb(160 160 160);
+  --color-accent: rgb(8 190 225);
+  --color-accent-muted: rgb(72 208 228);
+  --color-surface: rgb(15 15 15);
+  --color-border: rgb(40 40 40);
+  --color-preload: rgb(72 208 228);
+}
+
+@keyframes tutorial-move {
+  0%,
+  100% {
+    transform: translate(-30%, -20%);
+  }
+  50% {
+    transform: translate(-70%, -20%);
+  }
+}
+
+.animate-tutorial-move {
+  animation: tutorial-move 1.2s ease-in-out infinite;
 }
 
 *,
