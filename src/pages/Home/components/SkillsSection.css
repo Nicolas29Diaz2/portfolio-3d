@@ -10,31 +10,46 @@
 
 .skills-clean-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.25rem;
   margin-top: 2rem;
 }
 
 .skill-cat-card {
-  background: rgba(13, 19, 33, 0.45);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.15rem;
   padding: 1.5rem;
-  transition: all 0.25s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .skill-cat-card:hover {
-  border-color: rgba(8, 190, 225, 0.25);
+  border-color: var(--border-active);
   transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .skill-cat-title {
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
   margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: -0.015em;
+}
+
+.skill-cat-title::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
 }
 
 .skill-pills-wrap {
@@ -44,27 +59,22 @@
 }
 
 .skill-clean-pill {
-  padding: 0.35rem 0.75rem;
+  padding: 0.32rem 0.7rem;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  font-size: 0.8rem;
-  color: #cbd5e1;
-  font-weight: 500;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-family: var(--font-mono);
   transition: all 0.2s ease;
 }
 
 .skill-clean-pill:hover {
-  background: rgba(8, 190, 225, 0.12);
-  border-color: rgba(8, 190, 225, 0.3);
-  color: #38bdf8;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
   transform: translateY(-1px);
-}
-
-@media (max-width: 900px) {
-  .skills-clean-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 580px) {
@@ -80,3 +90,5 @@
     border-radius: 1rem;
   }
 }
+
+

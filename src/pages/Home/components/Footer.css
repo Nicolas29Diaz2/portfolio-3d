@@ -1,6 +1,6 @@
 .portfolio-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(7, 10, 18, 0.85);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-canvas);
   padding: 4rem 1.5rem 3rem;
   margin-top: 4rem;
 }
@@ -30,7 +30,7 @@
 
 .footer-brand-desc {
   font-size: 0.88rem;
-  color: #94a3b8;
+  color: var(--text-secondary);
   max-width: 450px;
   line-height: 1.5;
   margin: 0;
@@ -45,21 +45,21 @@
 .footer-social-icon {
   width: 42px;
   height: 42px;
-  border-radius: 12px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
 .footer-social-icon:hover {
-  background: rgba(8, 190, 225, 0.15);
-  border-color: rgba(8, 190, 225, 0.3);
-  color: #38bdf8;
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.35);
+  color: #ffffff;
   transform: translateY(-2px);
 }
 
@@ -74,8 +74,9 @@
 
 .footer-copy {
   font-size: 0.82rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin: 0;
+  font-family: var(--font-mono);
 }
 
 .footer-extra-links {
@@ -90,7 +91,7 @@
   gap: 0.4rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: #38bdf8;
+  color: var(--accent-cyan);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -102,7 +103,7 @@
 
 .footer-back-top {
   font-size: 0.82rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -110,3 +111,4 @@
 .footer-back-top:hover {
   color: #ffffff;
 }
+

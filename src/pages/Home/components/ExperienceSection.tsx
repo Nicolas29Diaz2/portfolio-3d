@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { WORK_EXPERIENCES, type WorkExperience } from "@/data/portfolio2d.data";
-import { ExternalLinkIcon } from "./Icons";
+import { ExternalLinkIcon, ChevronDownIcon } from "./Icons";
 import "./ExperienceSection.css";
 
 export function ExperienceSection() {
+  const [showAll, setShowAll] = useState(false);
+  const visibleExperiences = showAll ? WORK_EXPERIENCES : WORK_EXPERIENCES.slice(0, 3);
+
   return (
     <section className="experience-section" id="experience">
       <div className="experience-container">
@@ -18,13 +22,13 @@ export function ExperienceSection() {
 
         {/* Timeline */}
         <div className="experience-timeline">
-          {WORK_EXPERIENCES.map((exp: WorkExperience, index: number) => (
+          {visibleExperiences.map((exp: WorkExperience, index: number) => (
             <div key={exp.id} className="timeline-item">
               <div className="timeline-marker-col">
                 <div className="timeline-dot">
                   <div className="timeline-dot-inner" />
                 </div>
-                {index !== WORK_EXPERIENCES.length - 1 && (
+                {index !== visibleExperiences.length - 1 && (
                   <div className="timeline-line" />
                 )}
               </div>
@@ -76,7 +80,22 @@ export function ExperienceSection() {
             </div>
           ))}
         </div>
+
+        {/* Modern Expand Toggle */}
+        {WORK_EXPERIENCES.length > 3 && (
+          <div className="section-expand-row">
+            <button
+              type="button"
+              onClick={() => setShowAll(!showAll)}
+              className="section-expand-btn"
+            >
+              <span>{showAll ? "Show Fewer Roles" : `View Full Career (${WORK_EXPERIENCES.length - 3} more)`}</span>
+              <ChevronDownIcon className={`expand-icon ${showAll ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 }
+
